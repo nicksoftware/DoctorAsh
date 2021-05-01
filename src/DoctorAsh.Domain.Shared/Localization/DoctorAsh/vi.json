@@ -1,0 +1,26 @@
+{
+  "culture": "vi",
+  "texts": {
+    "Menu:Home": "Trang chủ",
+    "Welcome": "Chào mừng bạn",
+    "LongWelcomeMessage": "Chào mừng bạn đến ứng dụng. Đây là một dự án khởi nghiệp dựa trên khung ABP. Để biết thêm thông tin, hãy truy cập abp.io.",
+    "Permission:Appointment": "Appointment",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Appointment": "MenuAppointment",
+    "Appointment": "Appointment",
+    "AppointmentTitle": "AppointmentTitle",
+    "AppointmentDescription": "AppointmentDescription",
+    "AppointmentStartDate": "AppointmentStartDate",
+    "AppointmentEndDate": "AppointmentEndDate",
+    "AppointmentRecurrence": "AppointmentRecurrence",
+    "AppointmentStatus": "AppointmentStatus",
+    "CreateAppointment": "CreateAppointment",
+    "EditAppointment": "EditAppointment",
+    "AppointmentDeletionConfirmationMessage": "Are you sure to delete the appointment {0}?",
+    "SuccessfullyDeleted": "Successfully deleted",
+    "ViewOthers": "ViewOthers",
+    "Permission:ViewOthers": "Permission:ViewOthers"
+  }
+}

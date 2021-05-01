@@ -1,0 +1,30 @@
+{
+    "culture": "en",
+    "texts": {
+        "Menu:Home": "Home",
+        "Menu:Appointment": "Appointment",
+        "Appointments": "Appointments",
+        "Welcome": "Welcome",
+        "LongWelcomeMessage": "Welcome to Doctor Ash.This is a Project that will allow Patients and Doctors to set and manage appointments.",
+        "Permission:Appointment": "Appointment",
+        "Permission:Create": "Create",
+        "Permission:Update": "Update",
+        "Permission:Delete": "Delete",
+        "Permission:ViewOthers": "View Others",
+        "Permission:Cancel": "Cancel",
+        "Permission:Reschedule": "Reschedule",
+        "Appointment": "Appointment",
+        "AppointmentTitle": "Appointment Title",
+        "AppointmentDescription": "Appointment Description",
+        "AppointmentStartDate": "Appointment Start Date",
+        "AppointmentEndDate": "Appointment End Date",
+        "AppointmentRecurrence": "Appointment Recurrence",
+        "AppointmentStatus": "Appointment Status",
+        "CreateAppointment": "Create Appointment",
+        "EditAppointment": "Edit Appointment",
+        "AppointmentDeletionConfirmationMessage": "Are you sure to delete the appointment {0}?",
+        "SuccessfullyDeleted": "Successfully deleted",
+        "ViewOthers": "View Others",
+        "AppointmentInformations": "Appointment Information"
+    }
+}

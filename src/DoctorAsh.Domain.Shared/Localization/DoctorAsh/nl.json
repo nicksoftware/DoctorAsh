@@ -1,0 +1,26 @@
+{
+  "culture": "nl",
+  "texts": {
+    "Menu:Home": "Home",
+    "Welcome": "Welkom",
+    "LongWelcomeMessage": "Welkom bij de applicatie. Dit is een startup-project gebaseerd op het ABP-framework. Bezoek abp.io voor meer informatie.",
+    "Permission:Appointment": "Appointment",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Appointment": "MenuAppointment",
+    "Appointment": "Appointment",
+    "AppointmentTitle": "AppointmentTitle",
+    "AppointmentDescription": "AppointmentDescription",
+    "AppointmentStartDate": "AppointmentStartDate",
+    "AppointmentEndDate": "AppointmentEndDate",
+    "AppointmentRecurrence": "AppointmentRecurrence",
+    "AppointmentStatus": "AppointmentStatus",
+    "CreateAppointment": "CreateAppointment",
+    "EditAppointment": "EditAppointment",
+    "AppointmentDeletionConfirmationMessage": "Are you sure to delete the appointment {0}?",
+    "SuccessfullyDeleted": "Successfully deleted",
+    "ViewOthers": "ViewOthers",
+    "Permission:ViewOthers": "Permission:ViewOthers"
+  }
+}

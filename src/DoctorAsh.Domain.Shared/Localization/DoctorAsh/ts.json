@@ -1,0 +1,28 @@
+{
+    "culture": "ts",
+    "texts": {
+        "Menu:Home": "Kaya",
+        "Menu:Appointment": "Appointment",
+        "Appointments": "Ti Appointments",
+        "Welcome": "Haku Amukela",
+        "LongWelcomeMessage": "Haku Amukela eka Doctor Ash.App leyi yi lava pfuna va aka tiku nati dokodela ku ti kota ku vonana.",
+        "Permission:Appointment": "Appointment",
+        "Permission:Create": "Endla",
+        "Permission:Update": "Cinca",
+        "Permission:Delete": "Susa",
+        "Permission:ViewOthers": "Vona swa vanwani",
+        "Appointment": "Appointment",
+        "AppointmentTitle": "Hloko mhaka ya Appointment",
+        "AppointmentDescription": "Vuhlamuseri bya Appointment",
+        "AppointmentStartDate": "Siku ra Appoinmnent",
+        "AppointmentEndDate": "Siku na Nkarhi yi helaku Appointment",
+        "AppointmentRecurrence": "Yi humelela ka ngani Appointment",
+        "AppointmentStatus": "Xi Status xa Appointment",
+        "CreateAppointment": "Endla Appointment",
+        "EditAppointment": "Cinca Appointment",
+        "AppointmentDeletionConfirmationMessage": "Uti yimiselelin leswaku ulava ku susa Appointment leyi ya {0}?",
+        "SuccessfullyDeleted": "Yi Sukini",
+        "ViewOthers": "Vona Tavanwani",
+        "AppointmentInformations": "Vuxokoxoko bya Appointment"
+    }
+}
