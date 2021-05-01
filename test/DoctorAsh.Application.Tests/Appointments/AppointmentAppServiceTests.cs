@@ -192,6 +192,7 @@ namespace DoctorAsh.Appointments
             //Given
             var input = new PagedAndSortedResultRequestDto();
             var appointments = await _appointmentAppService.GetListAsync(input);
+            
             //When
             var cancelInput = new CancelAppointmentDto
             {
@@ -202,6 +203,7 @@ namespace DoctorAsh.Appointments
 
             //Then
             result.ShouldNotBeNull();
+
             result.Status.ShouldBe(StatusType.Cancelled);
 
         }

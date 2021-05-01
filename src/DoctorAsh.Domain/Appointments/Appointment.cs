@@ -10,11 +10,12 @@ namespace DoctorAsh.Appointments
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
         public RecurrenceType Recurrence { get; set; }
         public StatusType Status { get; set; }
-
+        public bool IsCancelled { get; set; }
+        public string cancellationReason { get; set; }
         protected Appointment()
         {
         }
@@ -28,6 +29,8 @@ namespace DoctorAsh.Appointments
             Title = title;
             Description = description;
         }
+
+
 
         internal void SetStartDate(DateTime startDate)
         {
@@ -44,6 +47,25 @@ namespace DoctorAsh.Appointments
                 throw new InvalidEndDateException(endDate);
 
             EndDate = endDate;
+        }
+
+        internal void Cancel(string reason)
+        {
+            if (IsCancelled)
+                throw new AppointmentAlreadyCancelledException(Id);
+
+            IsCancelled = true;
+            Status = StatusType.Cancelled;
+            cancellationReason = reason;
+        }
+        public void ReActivate()
+        {
+            if (!IsCancelled)
+                throw new AppointmentIsActiveException(Id);
+            
+            IsCancelled = false;
+            Status = StatusType.Cancelled;
+            cancellationReason = string.Empty;
         }
     }
 }

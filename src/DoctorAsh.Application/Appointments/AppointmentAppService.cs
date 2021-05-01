@@ -4,6 +4,7 @@ using DoctorAsh.Appointments.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
+using Volo.Abp.Domain.Entities;
 
 namespace DoctorAsh.Appointments
 {
@@ -55,14 +56,24 @@ namespace DoctorAsh.Appointments
         {
             return base.GetListAsync(input);
         }
-        public Task<AppointmentDto> RescheduleAsync(Guid id, RescheduleAppointmentDto input)
+        public async Task<AppointmentDto> RescheduleAsync(Guid id, RescheduleAppointmentDto input)
         {
-            throw new NotImplementedException();
+            var appointment = await Repository.FindAsync(id);
+            if(appointment == null) throw new EntityNotFoundException(typeof(Appointment),id);
+
+            var updatedAppointment =   await _appointmentManager.RescheduleAsync(appointment, input.NewDate, input.NewEndDate);
+
+            return MapToGetOutputDto(updatedAppointment);
         }
 
-        public Task<AppointmentDto> CancelAsync(Guid id, CancelAppointmentDto input)
+        public async Task<AppointmentDto> CancelAsync(Guid id, CancelAppointmentDto input)
         {
-            throw new NotImplementedException();
+            var appointment = await Repository.FindAsync(id);
+            if (appointment == null) throw new EntityNotFoundException(typeof(Appointment), id);
+
+            var cancelAppointment = await _appointmentManager.CancelAsync(appointment, input.Reason);
+            
+            return MapToGetOutputDto(cancelAppointment);
         }
     }
 }

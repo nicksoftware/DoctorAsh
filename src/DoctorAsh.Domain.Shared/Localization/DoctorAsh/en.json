@@ -25,6 +25,11 @@
         "AppointmentDeletionConfirmationMessage": "Are you sure to delete the appointment {0}?",
         "SuccessfullyDeleted": "Successfully deleted",
         "ViewOthers": "View Others",
-        "AppointmentInformations": "Appointment Information"
+        "AppointmentInformations": "Appointment Information",
+
+        "DoctorAsh:ErrorCode:0001":"Invalid Start Date Given {0}",
+        "DoctorAsh:ErrorCode:0002":"Invalid End Date Given {0}",
+        "DoctorAsh:ErrorCode:0003":"Appointment you are trying to Cancel is Already Cancelled",
+        "DoctorAsh:ErrorCode:0004":"Appointment is Already Active"
     }
 }
