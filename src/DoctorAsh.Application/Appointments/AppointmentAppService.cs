@@ -29,6 +29,7 @@ namespace DoctorAsh.Appointments
 
         public override async Task<AppointmentDto> CreateAsync(CreateAppointmentDto input)
         {
+            
             var createdAppointment = await _appointmentManager.CreateAsync(
                 title: input.Title,
                 description: input.Description,

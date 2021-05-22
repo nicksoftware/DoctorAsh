@@ -14,6 +14,9 @@ using Volo.Abp.PermissionManagement.IdentityServer;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.BackgroundWorkers;
+using Volo.Abp;
+using DoctorAsh.Appointments;
 
 namespace DoctorAsh
 {
@@ -28,10 +31,17 @@ namespace DoctorAsh
         typeof(AbpPermissionManagementDomainIdentityServerModule),
         typeof(AbpSettingManagementDomainModule),
         typeof(AbpTenantManagementDomainModule),
-        typeof(AbpEmailingModule)
+        typeof(AbpEmailingModule),
+        typeof(AbpBackgroundWorkersModule)
     )]
     public class DoctorAshDomainModule : AbpModule
     {
+
+        public override void OnApplicationInitialization(ApplicationInitializationContext context)
+        {
+            context.AddBackgroundWorker<MissedApointmentCheckWorker>();
+            base.OnApplicationInitialization(context);
+        }
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpMultiTenancyOptions>(options =>
@@ -40,9 +50,9 @@ namespace DoctorAsh
             });
 
             Configure<AbpVirtualFileSystemOptions>(options =>
-                {
-                    options.FileSets.AddEmbedded<DoctorAshDomainModule>("DoctorAsh");
-                });
+            {
+                options.FileSets.AddEmbedded<DoctorAshDomainModule>("DoctorAsh");
+            });
 
 #if DEBUG
             context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());

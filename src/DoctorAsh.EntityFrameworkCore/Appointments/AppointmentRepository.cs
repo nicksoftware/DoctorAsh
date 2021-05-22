@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DoctorAsh.EntityFrameworkCore;
@@ -14,13 +15,27 @@ namespace DoctorAsh.Appointments
         {
         }
 
-        // public override Task<List<Appointment>> GetUserAppointmentsAsync(
+        public async Task UpdateMissedAppointmentsAsync()
+        {
+            var dbSet = await GetDbSetAsync();
+
+            var appointments = dbSet.Where(x=>!x.IsCancelled && x.Status != StatusType.Missed).ToList();
+
+            appointments.ForEach(appointment => appointment.SetToMissed());
+            
+            await UpdateManyAsync(appointments,true);
+        }
+
+        // public  async Task<IEnumerable<Appointment>> GetUserCurrentAppointmentsAsync(
         //     int skipCount,
         //     int maxResultCount,
         //     string sorting,
         //     bool includeDetails = false,
         //     CancellationToken cancellationToken = default)
         // {
+        //     var dbSet = await GetDbSetAsync();
+        //     return dbSet.Where(x=>x.CreatorId == )
+        //     throw new NotImplementedException();
         // }
     }
 }

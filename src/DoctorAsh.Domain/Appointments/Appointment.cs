@@ -16,7 +16,7 @@ namespace DoctorAsh.Appointments
         public StatusType Status { get; set; }
         public bool IsCancelled { get; set; }
         public string cancellationReason { get; set; }
-        protected Appointment(){}
+        protected Appointment() { }
 
         internal Appointment(
             [NotNull] Guid id,
@@ -38,7 +38,7 @@ namespace DoctorAsh.Appointments
         internal void SetEndDate(DateTime endDate)
         {
             if (endDate <= StartDate) throw new InvalidEndDateException(endDate);
-            
+
             EndDate = endDate;
         }
 
@@ -53,6 +53,14 @@ namespace DoctorAsh.Appointments
             AddLocalEvent(new AppointmentCancelled(Id, reason));
         }
 
+        public void SetToMissed()
+        {
+            if (Status == StatusType.Missed) return;
+            
+            Status = StatusType.Missed;
+
+            AddLocalEvent(new AppointmentMissed(Id));
+        }
         public void ReActivate()
         {
             if (!IsCancelled) throw new AppointmentIsActiveException(Id);
