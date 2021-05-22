@@ -10,10 +10,8 @@ namespace DoctorAsh.Appointments.Events
         ILocalEventHandler<EntityCreatedEventData<Appointment>>,
         ITransientDependency
     {
-        public Task HandleEventAsync(EntityCreatedEventData<Appointment> eventData)
-        {
-            return Task.CompletedTask;
-        }
+        public Task HandleEventAsync(EntityCreatedEventData<Appointment> eventData) =>
+            Task.CompletedTask;
     }
 
 }

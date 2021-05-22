@@ -4,9 +4,9 @@ namespace DoctorAsh.Appointments
 {
     internal class AppointmentBuilder
     {
-        private string _title = "";
+        private string _title = string.Empty;
         private Guid _id = Guid.Empty;
-        private string _description = "";
+        private string _description = string.Empty;
         private DateTime _startDate = new DateTime(2021, 05, 13);
         private DateTime? _endDate = null;
         private RecurrenceType _recurrence = RecurrenceType.Once;

@@ -7,12 +7,10 @@ using Volo.Abp.EventBus;
 namespace DoctorAsh.Appointments.Events
 {
     public class AppointmentUpdatedHandler :
-     ILocalEventHandler<EntityUpdatedEventData<Appointment>>,
+    ILocalEventHandler<EntityUpdatedEventData<Appointment>>,
     ITransientDependency
     {
-        public Task HandleEventAsync(EntityUpdatedEventData<Appointment> eventData)
-        {
+        public Task HandleEventAsync(EntityUpdatedEventData<Appointment> eventData) =>
             throw new NotImplementedException();
-        }
     }
 }

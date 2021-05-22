@@ -10,7 +10,6 @@ namespace DoctorAsh.Appointments.Events
         public Guid AppointmentId { get; set; }
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
-
         public string Reason { get; set; }
         public DateTime OldDate { get; set; }
         public DateTime NewDate { get; set; }

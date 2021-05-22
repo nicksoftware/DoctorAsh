@@ -1,8 +1,8 @@
-using System.Reflection;
 using System;
 using Volo.Abp.Domain.Entities.Auditing;
 using DoctorAsh.Appointments.Exceptions;
 using JetBrains.Annotations;
+using DoctorAsh.Appointments.Events;
 
 namespace DoctorAsh.Appointments
 {
@@ -16,9 +16,7 @@ namespace DoctorAsh.Appointments
         public StatusType Status { get; set; }
         public bool IsCancelled { get; set; }
         public string cancellationReason { get; set; }
-        protected Appointment()
-        {
-        }
+        protected Appointment(){}
 
         internal Appointment(
             [NotNull] Guid id,
@@ -30,42 +28,40 @@ namespace DoctorAsh.Appointments
             Description = description;
         }
 
-
-
         internal void SetStartDate(DateTime startDate)
         {
 
-            if (startDate < DateTime.Now)
-                throw new InvalidStartDateException(startDate);
-
+            if (startDate < DateTime.Now) throw new InvalidStartDateException(startDate);
             StartDate = startDate;
         }
 
         internal void SetEndDate(DateTime endDate)
         {
-            if (endDate <= StartDate)
-                throw new InvalidEndDateException(endDate);
-
+            if (endDate <= StartDate) throw new InvalidEndDateException(endDate);
+            
             EndDate = endDate;
         }
 
         internal void Cancel(string reason)
         {
-            if (IsCancelled)
-                throw new AppointmentAlreadyCancelledException(Id);
+            if (IsCancelled) throw new AppointmentAlreadyCancelledException(Id);
 
             IsCancelled = true;
             Status = StatusType.Cancelled;
             cancellationReason = reason;
+
+            AddLocalEvent(new AppointmentCancelled(Id, reason));
         }
+
         public void ReActivate()
         {
-            if (!IsCancelled)
-                throw new AppointmentIsActiveException(Id);
-            
+            if (!IsCancelled) throw new AppointmentIsActiveException(Id);
+
             IsCancelled = false;
             Status = StatusType.Cancelled;
             cancellationReason = string.Empty;
+
+            AddLocalEvent(new AppointmemtReactivated(Id));
         }
     }
 }

@@ -27,21 +27,19 @@ namespace DoctorAsh.Appointments
             var input = new CreateAppointmentDto
             {
                 Title = "Test Appointment",
-                Description = "Testing appointmnent",
+                Description = "Testing appointment",
                 StartDate = date,
                 EndDate = date.AddDays(10),
                 Recurrence = RecurrenceType.Annually,
             };
+            
             //When
             var exception = await Assert.ThrowsAsync<InvalidStartDateException>(async () =>
             {
-                // statement that throws exception comes here
                 await _appointmentAppService.CreateAsync(input);
             });
 
-            // exception.Code.ShouldBe("YourExceptionCode");
             exception.Code.ShouldBe(DoctorAshDomainErrorCodes.InvalidStartDateException);
-            //Then
         }
 
         [Fact]
@@ -52,7 +50,7 @@ namespace DoctorAsh.Appointments
             var input = new CreateAppointmentDto
             {
                 Title = "Test Appointment",
-                Description = "Testing appointmnent",
+                Description = "Testing appointment",
                 StartDate = date,
                 EndDate = date,
                 Recurrence = RecurrenceType.Annually,
@@ -76,7 +74,7 @@ namespace DoctorAsh.Appointments
             var input = new CreateAppointmentDto
             {
                 Title = "Test Appointment",
-                Description = "Testing appointmnent",
+                Description = "Testing appointment",
                 StartDate = date,
                 EndDate = date.AddDays(10),
                 Recurrence = RecurrenceType.Annually,
@@ -87,6 +85,7 @@ namespace DoctorAsh.Appointments
             //Then
 
             result.ShouldNotBeNull();
+            result.Id.ShouldNotBe(Guid.Empty);
             result.Title.ShouldBe(input.Title);
             result.Description.ShouldBe(input.Description);
             result.StartDate.ShouldBe(input.StartDate);
@@ -132,7 +131,7 @@ namespace DoctorAsh.Appointments
             var input = new CreateAppointmentDto
             {
                 Title = "Test Appointment",
-                Description = "Testing appointmnent",
+                Description = "Testing appointment",
                 StartDate = date,
                 EndDate = date.AddDays(10),
                 Recurrence = RecurrenceType.Annually,

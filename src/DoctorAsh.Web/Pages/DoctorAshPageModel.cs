@@ -7,9 +7,6 @@ namespace DoctorAsh.Web.Pages
      */
     public abstract class DoctorAshPageModel : AbpPageModel
     {
-        protected DoctorAshPageModel()
-        {
-            LocalizationResourceType = typeof(DoctorAshResource);
-        }
+        protected DoctorAshPageModel()=> LocalizationResourceType = typeof(DoctorAshResource);
     }
 }
