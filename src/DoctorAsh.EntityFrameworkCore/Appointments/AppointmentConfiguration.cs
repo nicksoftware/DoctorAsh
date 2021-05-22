@@ -1,4 +1,5 @@
 using System;
+using DoctorAsh.Doctors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Volo.Abp;
@@ -17,6 +18,8 @@ namespace DoctorAsh.Appointments
             b.Property(x => x.Title).IsRequired().HasMaxLength(AppointmentConsts.TitleMaxLength);
 
             b.Property(x => x.Description).IsRequired().HasMaxLength(AppointmentConsts.DescriptionMaxLength);
+            
+            b.HasOne<Doctor>().WithMany().HasForeignKey(x => x.DoctorId).IsRequired();
         }
     }
 }

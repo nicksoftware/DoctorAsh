@@ -16,5 +16,13 @@ namespace DoctorAsh.Permissions
             public const string Cancel = Default + ".Cancel";
             public const string Reschedule = Default + ".Reschedule";
         }
+
+        public class Doctor
+        {
+            public const string Default = GroupName + ".Doctor";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
     }
 }

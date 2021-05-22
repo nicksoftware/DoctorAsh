@@ -1,0 +1,48 @@
+@page
+@using DoctorAsh.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using DoctorAsh.Web.Pages.Doctors.Doctor
+@using DoctorAsh.Localization
+@using DoctorAsh.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<DoctorAshResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Doctor"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Doctor"].Value);
+    PageLayout.Content.MenuItemName = DoctorAshMenus.Doctor;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Doctors/Doctor/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Doctors/Doctor/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Doctor"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+			    @if (await Authorization.IsGrantedAsync(DoctorAshPermissions.Doctor.Create))
+                {
+                <abp-button id="NewDoctorButton"
+                            text="@L["CreateDoctor"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="DoctorTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

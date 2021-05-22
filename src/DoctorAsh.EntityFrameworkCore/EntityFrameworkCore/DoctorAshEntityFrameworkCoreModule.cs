@@ -1,3 +1,4 @@
+using DoctorAsh.Doctors;
 using DoctorAsh.Appointments;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -41,6 +42,7 @@ namespace DoctorAsh.EntityFrameworkCore
                  * default repositories only for aggregate roots */
                 options.AddDefaultRepositories(includeAllEntities: true);
                 options.AddRepository<Appointment, AppointmentRepository>();
+                options.AddRepository<Doctor, DoctorRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

@@ -1,5 +1,7 @@
 using DoctorAsh.Appointments.Dtos;
 using DoctorAsh.Web.Pages.Appointments.Appointment.ViewModels;
+using DoctorAsh.Doctors.Dtos;
+using DoctorAsh.Web.Pages.Doctors.Doctor.ViewModels;
 using AutoMapper;
 
 namespace DoctorAsh.Web
@@ -12,6 +14,8 @@ namespace DoctorAsh.Web
             CreateMap<AppointmentDto, CreateEditAppointmentViewModel>();
             CreateMap<CreateEditAppointmentViewModel, CreateAppointmentDto>();
             CreateMap<CreateEditAppointmentViewModel, UpdateAppointmentDto>();
+            CreateMap<DoctorDto, CreateEditDoctorViewModel>();
+            CreateMap<CreateEditDoctorViewModel, CreateUpdateDoctorDto>();
         }
     }
 }

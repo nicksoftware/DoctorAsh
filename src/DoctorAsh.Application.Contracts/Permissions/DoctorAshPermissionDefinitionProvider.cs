@@ -20,6 +20,11 @@ namespace DoctorAsh.Permissions
             appointmentPermission.AddChild(DoctorAshPermissions.Appointment.ViewOthers, L("Permission:ViewOthers"));
             appointmentPermission.AddChild(DoctorAshPermissions.Appointment.Cancel, L("Permission:Cancel"));
             appointmentPermission.AddChild(DoctorAshPermissions.Appointment.Reschedule, L("Permission:Reschedule"));
+
+            var doctorPermission = myGroup.AddPermission(DoctorAshPermissions.Doctor.Default, L("Permission:Doctor"));
+            doctorPermission.AddChild(DoctorAshPermissions.Doctor.Create, L("Permission:Create"));
+            doctorPermission.AddChild(DoctorAshPermissions.Doctor.Update, L("Permission:Update"));
+            doctorPermission.AddChild(DoctorAshPermissions.Doctor.Delete, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

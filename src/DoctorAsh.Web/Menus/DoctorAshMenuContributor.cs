@@ -53,6 +53,12 @@ namespace DoctorAsh.Web.Menus
                     new ApplicationMenuItem(DoctorAshMenus.Appointment, l["Menu:Appointment"], "/Appointments/Appointment")
                 );
             }
+            if (await context.IsGrantedAsync(DoctorAshPermissions.Doctor.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(DoctorAshMenus.Doctor, l["Menu:Doctor"], "/Doctors/Doctor")
+                );
+            }
         }
     }
 }

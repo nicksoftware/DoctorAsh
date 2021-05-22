@@ -24,7 +24,9 @@ namespace DoctorAsh.Appointments.Events
             IBackgroundJobManager  backgroundJobManager,
             IAppointmentRepository appointmentRepository)
         {
-            
+            _userLookupServiceProvider = userLookupServiceProvider;
+            _backgroundJobManager = backgroundJobManager;
+            _appointmentRepository = appointmentRepository;
         }
         public  Task HandleEventAsync(EntityCreatedEventData<Appointment> eventData) 
         {
@@ -48,7 +50,9 @@ namespace DoctorAsh.Appointments.Events
             {
                 
                 // var patient =await _patientService.FindAsync(eventData.PatientId);
+                
                 //var patientUser = _userLookupServiceProvider.FindByIdAsync(patient.UserId);
+
                 var emailBody = "<p>Your Appointment with Doctor **** ,has been ReActivated</p>";
                 var patientEmail = string.Empty;
 

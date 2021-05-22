@@ -6,20 +6,26 @@ using System.Threading.Tasks;
 using DoctorAsh.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.Timing;
 
 namespace DoctorAsh.Appointments
 {
     public class AppointmentRepository : EfCoreRepository<DoctorAshDbContext, Appointment, Guid>, IAppointmentRepository
     {
-        public AppointmentRepository(IDbContextProvider<DoctorAshDbContext> dbContextProvider) : base(dbContextProvider)
+        private readonly IClock _clock;
+
+        public AppointmentRepository(IDbContextProvider<DoctorAshDbContext> dbContextProvider,IClock clock) : base(dbContextProvider)
         {
+            _clock = clock;
         }
 
         public async Task UpdateMissedAppointmentsAsync()
         {
             var dbSet = await GetDbSetAsync();
+            
 
-            var appointments = dbSet.Where(x=>!x.IsCancelled && x.Status != StatusType.Missed).ToList();
+            var appointments = dbSet
+            .Where(x=>!x.IsCancelled && x.Status != StatusType.Missed && _clock.Now > x.StartDate ).ToList();
 
             appointments.ForEach(appointment => appointment.SetToMissed());
             

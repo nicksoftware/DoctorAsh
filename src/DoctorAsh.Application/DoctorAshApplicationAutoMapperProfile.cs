@@ -1,5 +1,7 @@
 using DoctorAsh.Appointments;
 using DoctorAsh.Appointments.Dtos;
+using DoctorAsh.Doctors;
+using DoctorAsh.Doctors.Dtos;
 using AutoMapper;
 
 namespace DoctorAsh
@@ -13,6 +15,8 @@ namespace DoctorAsh
              * into multiple profile classes for a better organization. */
             CreateMap<Appointment, AppointmentDto>();
             CreateMap<CreateAppointmentDto, Appointment>(MemberList.Source);
+            CreateMap<Doctor, DoctorDto>();
+            CreateMap<CreateUpdateDoctorDto, Doctor>(MemberList.Source);
         }
     }
 }

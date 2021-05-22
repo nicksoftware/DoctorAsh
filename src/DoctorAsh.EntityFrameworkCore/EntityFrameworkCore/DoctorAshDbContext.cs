@@ -6,6 +6,7 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.Identity;
 using Volo.Abp.Users.EntityFrameworkCore;
 using DoctorAsh.Appointments;
+using DoctorAsh.Doctors;
 
 namespace DoctorAsh.EntityFrameworkCore
 {
@@ -23,6 +24,7 @@ namespace DoctorAsh.EntityFrameworkCore
     {
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
 
         public DoctorAshDbContext(DbContextOptions<DoctorAshDbContext> options)
             : base(options)

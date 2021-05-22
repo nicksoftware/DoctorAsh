@@ -21,6 +21,16 @@
     "AppointmentDeletionConfirmationMessage": "Are you sure to delete the appointment {0}?",
     "SuccessfullyDeleted": "Successfully deleted",
     "ViewOthers": "ViewOthers",
-    "Permission:ViewOthers": "Permission:ViewOthers"
+    "Permission:ViewOthers": "Permission:ViewOthers",
+    "Permission:Doctor": "Doctor",
+    "Menu:Doctor": "MenuDoctor",
+    "Doctor": "Doctor",
+    "DoctorAppointments": "DoctorAppointments",
+    "DoctorWorkingHours": "DoctorWorkingHours",
+    "DoctorStatus": "DoctorStatus",
+    "DoctorRatingScore": "DoctorRatingScore",
+    "CreateDoctor": "CreateDoctor",
+    "EditDoctor": "EditDoctor",
+    "DoctorDeletionConfirmationMessage": "Are you sure to delete the doctor {0}?"
   }
 }
