@@ -1,8 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using DoctorAsh.Emailing;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Entities.Events;
 using Volo.Abp.EventBus;
+using Volo.Abp.Users;
 
 namespace DoctorAsh.Appointments.Events
 {
@@ -10,8 +13,70 @@ namespace DoctorAsh.Appointments.Events
         ILocalEventHandler<EntityCreatedEventData<Appointment>>,
         ITransientDependency
     {
-        public Task HandleEventAsync(EntityCreatedEventData<Appointment> eventData) =>
-            Task.CompletedTask;
+
+        private readonly IExternalUserLookupServiceProvider _userLookupServiceProvider;
+        private readonly IBackgroundJobManager _backgroundJobManager;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private Guid _appointmentId = Guid.Empty;
+
+        public AppointmentCreatedHandler(
+            IExternalUserLookupServiceProvider userLookupServiceProvider,
+            IBackgroundJobManager  backgroundJobManager,
+            IAppointmentRepository appointmentRepository)
+        {
+            
+        }
+        public  Task HandleEventAsync(EntityCreatedEventData<Appointment> eventData) 
+        {
+            //Notify Patient and Doctor
+            
+            try
+            {
+                // await SendDoctorEmailAsync(eventData.DoctorId);
+                // await SendPatientEmailAsync(eventData.PatientdId);                
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private async Task SendPatientEmailAsync(Guid patientId)
+            {
+                
+                // var patient =await _patientService.FindAsync(eventData.PatientId);
+                //var patientUser = _userLookupServiceProvider.FindByIdAsync(patient.UserId);
+                var emailBody = "<p>Your Appointment with Doctor **** ,has been ReActivated</p>";
+                var patientEmail = string.Empty;
+
+                await  _backgroundJobManager.EnqueueAsync(
+                    new EmailSendingArgs
+                    {
+                        EmailAddress = patientEmail,
+                        Subject = "Appointment Reactivated",
+                        Body = emailBody
+                    }
+                );
+            }
+            private async Task SendDoctorEmailAsync(Guid doctorId)
+            {
+                // var doctor =await _doctorService.FindAsync(eventData.DoctorId);
+                // var doctorUser = _userLookupServiceProvider.FindByIdAsync(doctor.UserId);
+                var emailBody = "<p>Doctor *** Your Appointment with Patient **** ,has been ReActivated</p>";
+                var patientEmail = string.Empty;
+
+                await  _backgroundJobManager.EnqueueAsync(
+                    new EmailSendingArgs
+                    {
+                        EmailAddress = patientEmail,
+                        Subject = "Appointment Reactivated",
+                        Body = emailBody
+                    }
+                );
+            }
     }
 
 }

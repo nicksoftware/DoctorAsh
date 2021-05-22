@@ -21,13 +21,18 @@ namespace DoctorAsh.Appointments.Events
         ITransientDependency
     {
         public Task HandleEventAsync(AppointmentRescheduled eventData)
-        {
+        {   
+            try
+            {
+                //Notify  Patient of changes 
+                //Change appointment status to waitingForApproval
+                // Ask Doctor to Approve Rescheduling   
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
 
-            //Notify  Patient of changes 
-
-            //Change appointment status to waitingForApproval
-
-            // Ask Doctor to Approve Rescheduling
 
             return Task.CompletedTask;
         }

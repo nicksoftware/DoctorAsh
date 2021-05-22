@@ -10,7 +10,9 @@ namespace DoctorAsh.Appointments.Events
     ILocalEventHandler<EntityUpdatedEventData<Appointment>>,
     ITransientDependency
     {
-        public Task HandleEventAsync(EntityUpdatedEventData<Appointment> eventData) =>
-            throw new NotImplementedException();
+        public Task HandleEventAsync(EntityUpdatedEventData<Appointment> eventData) 
+        {
+            return Task.CompletedTask;
+        }    
     }
 }
