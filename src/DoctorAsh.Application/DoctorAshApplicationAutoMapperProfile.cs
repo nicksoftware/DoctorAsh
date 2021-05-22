@@ -2,6 +2,8 @@ using DoctorAsh.Appointments;
 using DoctorAsh.Appointments.Dtos;
 using DoctorAsh.Doctors;
 using DoctorAsh.Doctors.Dtos;
+using DoctorAsh.Patients;
+using DoctorAsh.Patients.Dtos;
 using AutoMapper;
 
 namespace DoctorAsh
@@ -17,6 +19,8 @@ namespace DoctorAsh
             CreateMap<CreateAppointmentDto, Appointment>(MemberList.Source);
             CreateMap<Doctor, DoctorDto>();
             CreateMap<CreateUpdateDoctorDto, Doctor>(MemberList.Source);
+            CreateMap<Patient, PatientDto>();
+            CreateMap<CreateUpdatePatientDto, Patient>(MemberList.Source);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace DoctorAsh.Web.Menus
 
         public const string Appointment = Prefix + ".Appointment";
         public const string Doctor = Prefix + ".Doctor";
+        public const string Patient = Prefix + ".Patient";
     }
 }

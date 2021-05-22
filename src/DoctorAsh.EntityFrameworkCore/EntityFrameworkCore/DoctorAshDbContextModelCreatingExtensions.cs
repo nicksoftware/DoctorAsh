@@ -1,3 +1,4 @@
+using DoctorAsh.Patients;
 using DoctorAsh.Doctors;
 using System.Reflection;
 using DoctorAsh.Appointments;
@@ -13,8 +14,6 @@ namespace DoctorAsh.EntityFrameworkCore
         {
             Check.NotNull(builder, nameof(builder));
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            
         }
     }
 }

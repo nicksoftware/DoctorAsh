@@ -1,3 +1,4 @@
+using DoctorAsh.Patients;
 using DoctorAsh.Doctors;
 using DoctorAsh.Appointments;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +44,7 @@ namespace DoctorAsh.EntityFrameworkCore
                 options.AddDefaultRepositories(includeAllEntities: true);
                 options.AddRepository<Appointment, AppointmentRepository>();
                 options.AddRepository<Doctor, DoctorRepository>();
+                options.AddRepository<Patient, PatientRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

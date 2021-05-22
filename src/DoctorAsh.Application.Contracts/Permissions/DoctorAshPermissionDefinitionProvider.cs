@@ -25,6 +25,11 @@ namespace DoctorAsh.Permissions
             doctorPermission.AddChild(DoctorAshPermissions.Doctor.Create, L("Permission:Create"));
             doctorPermission.AddChild(DoctorAshPermissions.Doctor.Update, L("Permission:Update"));
             doctorPermission.AddChild(DoctorAshPermissions.Doctor.Delete, L("Permission:Delete"));
+
+            var patientPermission = myGroup.AddPermission(DoctorAshPermissions.Patient.Default, L("Permission:Patient"));
+            patientPermission.AddChild(DoctorAshPermissions.Patient.Create, L("Permission:Create"));
+            patientPermission.AddChild(DoctorAshPermissions.Patient.Update, L("Permission:Update"));
+            patientPermission.AddChild(DoctorAshPermissions.Patient.Delete, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

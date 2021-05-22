@@ -1,3 +1,4 @@
+using DoctorAsh.Appointments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -10,6 +11,7 @@ namespace DoctorAsh.Doctors
         {
             b.ToTable(DoctorAshConsts.DbTablePrefix + "Doctors", DoctorAshConsts.DbSchema);
             b.ConfigureByConvention(); 
+            b.HasMany<Appointment>(x=>x.Appointments);
         }
     }
 }

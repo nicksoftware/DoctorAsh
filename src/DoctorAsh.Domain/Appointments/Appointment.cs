@@ -9,6 +9,7 @@ namespace DoctorAsh.Appointments
     public class Appointment : FullAuditedAggregateRoot<Guid>
     {
         public Guid DoctorId { get; set; }
+        public Guid PatientId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; private set; }

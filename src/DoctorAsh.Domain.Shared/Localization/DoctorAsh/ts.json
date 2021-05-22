@@ -33,6 +33,13 @@
     "DoctorRatingScore": "DoctorRatingScore",
     "CreateDoctor": "CreateDoctor",
     "EditDoctor": "EditDoctor",
-    "DoctorDeletionConfirmationMessage": "Are you sure to delete the doctor {0}?"
+    "DoctorDeletionConfirmationMessage": "Are you sure to delete the doctor {0}?",
+    "Permission:Patient": "Patient",
+    "Menu:Patient": "MenuPatient",
+    "Patient": "Patient",
+    "PatientAppointments": "PatientAppointments",
+    "CreatePatient": "CreatePatient",
+    "EditPatient": "EditPatient",
+    "PatientDeletionConfirmationMessage": "Are you sure to delete the patient {0}?"
   }
 }
