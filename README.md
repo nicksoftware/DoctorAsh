@@ -44,6 +44,7 @@ or go to the DbMigrator project and run type `dotnet run`
 ## Overview
 
 <img src="https://github.com/abpframework/abp/blob/dev/docs/en/images/ddd-microservice-simple.png"/>
+
 ### Domain
 
 This will contain all Aggregates and entities ,Business rules ,Business services , Business exceptions, interfaces,Shared types.
