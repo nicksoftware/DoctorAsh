@@ -10,19 +10,19 @@ namespace DoctorAsh.Appointments
 {
     public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
     {
-        public void Configure(EntityTypeBuilder<Appointment> b)
+        public void Configure(EntityTypeBuilder<Appointment> builder)
         {
-            b.ToTable(DoctorAshConsts.DbTablePrefix + "Appointments", DoctorAshConsts.DbSchema);
+            builder.ToTable(DoctorAshConsts.DbTablePrefix + "Appointments", DoctorAshConsts.DbSchema);
 
-            b.ConfigureByConvention();
+            builder.ConfigureByConvention();
 
-            b.Property(x => x.Title).IsRequired().HasMaxLength(AppointmentConsts.TitleMaxLength);
+            builder.Property(x => x.Title).IsRequired().HasMaxLength(AppointmentConsts.TitleMaxLength);
 
-            b.Property(x => x.Description).IsRequired().HasMaxLength(AppointmentConsts.DescriptionMaxLength);
+            builder.Property(x => x.Description).IsRequired().HasMaxLength(AppointmentConsts.DescriptionMaxLength);
             
-            b.HasOne<Doctor>().WithMany(x=>x.Appointments).HasForeignKey(x => x.DoctorId).IsRequired();
+            builder.HasOne<Doctor>().WithMany(x=>x.Appointments).HasForeignKey(x => x.DoctorId).IsRequired();
             
-            b.HasOne<Patient>().WithMany(x=>x.Appointments).HasForeignKey(x=>x.PatientId).IsRequired();
+            builder.HasOne<Patient>().WithMany(x=>x.Appointments).HasForeignKey(x=>x.PatientId).IsRequired();
         }
     }
 }

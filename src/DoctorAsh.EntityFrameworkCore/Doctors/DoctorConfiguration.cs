@@ -7,11 +7,11 @@ namespace DoctorAsh.Doctors
 {
     public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
     {
-        public void Configure(EntityTypeBuilder<Doctor> b)
+        public void Configure(EntityTypeBuilder<Doctor> builder)
         {
-            b.ToTable(DoctorAshConsts.DbTablePrefix + "Doctors", DoctorAshConsts.DbSchema);
-            b.ConfigureByConvention(); 
-            b.HasMany<Appointment>(x=>x.Appointments);
+            builder.ToTable(DoctorAshConsts.DbTablePrefix + "Doctors", DoctorAshConsts.DbSchema);
+            builder.ConfigureByConvention(); 
+            builder.HasMany<Appointment>(x=>x.Appointments);
         }
     }
 }
