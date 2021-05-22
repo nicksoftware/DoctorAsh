@@ -8,6 +8,7 @@ using Volo.Abp;
 using DoctorAsh.Appointments.Exceptions;
 using Volo.Abp.EventBus.Local;
 using DoctorAsh.Appointments.Events;
+using Volo.Abp.Timing;
 
 namespace DoctorAsh.Appointments
 {
@@ -15,12 +16,16 @@ namespace DoctorAsh.Appointments
     {
         private readonly IAppointmentRepository _appointmentRepo;
         private readonly ILocalEventBus _localEventBus;
+        private readonly IClock _clock;
 
-        public AppointmentManager(IAppointmentRepository appointmentRepo,
-        ILocalEventBus localEventBus)
+        public AppointmentManager(
+            IAppointmentRepository appointmentRepo,
+            ILocalEventBus localEventBus,
+            IClock clock)
         {
             _appointmentRepo = appointmentRepo;
             _localEventBus = localEventBus;
+            _clock = clock;
         }
         public async Task<Appointment> CreateAsync(
             [NotNull] string title,
@@ -69,8 +74,7 @@ namespace DoctorAsh.Appointments
             [NotNull] string reason
         )
         {
-            appointment.Cancel(reason);
-
+            appointment.Cancel(reason,_clock.Now);
             var cancelledAppointment = await _appointmentRepo.UpdateAsync(appointment,true);
             return cancelledAppointment;
         }

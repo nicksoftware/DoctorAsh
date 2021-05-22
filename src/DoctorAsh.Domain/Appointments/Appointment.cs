@@ -45,7 +45,7 @@ namespace DoctorAsh.Appointments
             EndDate = endDate;
         }
 
-        internal void Cancel(string reason)
+        internal void Cancel(string reason,DateTime cancellationDate)
         {
             if (IsCancelled) throw new AppointmentAlreadyCancelledException(Id);
 
@@ -53,7 +53,7 @@ namespace DoctorAsh.Appointments
             Status = StatusType.Cancelled;
             cancellationReason = reason;
 
-            AddLocalEvent(new AppointmentCancelled(Id, reason));
+            AddLocalEvent(new AppointmentCancelled(Id, reason,cancellationDate));
         }
 
         public void SetToMissed()

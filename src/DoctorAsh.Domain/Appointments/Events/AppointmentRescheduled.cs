@@ -1,13 +1,22 @@
 using System;
 using System.Threading.Tasks;
+using DoctorAsh.Doctors;
+using DoctorAsh.Emailing;
+using DoctorAsh.Patients;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
+using Volo.Abp.Users;
 
 namespace DoctorAsh.Appointments.Events
 {
-    public class AppointmentRescheduled
+    public class AppointmentRescheduled : IAppointmentEventData
     {
-        public Guid AppointmentId { get; set; }
+        public AppointmentRescheduled(Guid appointmentId)
+        {
+            AppointmentId = appointmentId;
+        }
+        public Guid AppointmentId { get; init; }
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
         public string Reason { get; set; }
@@ -17,24 +26,44 @@ namespace DoctorAsh.Appointments.Events
     }
 
     public class AppointmentRescheduledHandler :
-        ILocalEventHandler<AppointmentRescheduled>,
-        ITransientDependency
+        AppointmentEventHandler<AppointmentRescheduled>
     {
-        public Task HandleEventAsync(AppointmentRescheduled eventData)
-        {   
-            try
-            {
-                //Notify  Patient of changes 
-                //Change appointment status to waitingForApproval
-                // Ask Doctor to Approve Rescheduling   
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+        public AppointmentRescheduledHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository)
+        {
+        }
 
+        public override Task HandleEventAsync(IAppointmentEventData eventData)
+        {
+            Appointment.Status = StatusType.AwaitingApproval;
+            AppointmentRepository.UpdateAsync(Appointment, true);
+            return base.HandleEventAsync(eventData);
+        }
+        protected override async Task SendDoctorEmailAsync()
+        {
+            var emailBody = $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been Rescheduled Please Approve the new Set Date</p>";
 
-            return Task.CompletedTask;
+            await BackgroundJobManager.EnqueueAsync(
+                new EmailSendingArgs
+                {
+                    EmailAddress = DoctorUser.Email,
+                    Subject = "Appointment Rescheduled",
+                    Body = emailBody
+                }
+            );
+        }
+
+        protected override async Task SendPatientEmailAsync()
+        {
+            var emailBody = $"<p>Your Appointment with Doctor {GetDoctorFullNames()} ,has been Rescheduled and is awaitng for approval by Doctor</p>";
+
+            await BackgroundJobManager.EnqueueAsync(
+                new EmailSendingArgs
+                {
+                    EmailAddress = PatientUser.Email,
+                    Subject = "Appointment Rescheduled",
+                    Body = emailBody
+                }
+            );
         }
     }
 }

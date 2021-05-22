@@ -7,6 +7,7 @@ namespace DoctorAsh.Patients
 {
     public class Patient: FullAuditedAggregateRoot<Guid>
     {
+        public Guid UserId {get;set;}
         public ICollection<Appointment> Appointments { get; set; }
 
         protected Patient()

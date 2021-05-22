@@ -11,7 +11,7 @@ namespace DoctorAsh.Doctors
     {
         protected Doctor(){}
         internal Doctor(Guid id):base(id){}
-
+        public Guid UserId { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
         public ICollection<WorkingHour> WorkingHours{get;set;}
         public AvailablityStatusType Status { get; set; }
