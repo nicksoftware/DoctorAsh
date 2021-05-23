@@ -9,17 +9,5 @@ namespace DoctorAsh.Patients
         public PatientDomainTests()
         {
         }
-
-        /*
-        [Fact]
-        public async Task Test1()
-        {
-            // Arrange
-
-            // Assert
-
-            // Assert
-        }
-        */
     }
 }

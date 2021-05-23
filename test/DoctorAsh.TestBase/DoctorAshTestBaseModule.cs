@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Authorization;
 using Volo.Abp.Autofac;
@@ -18,6 +19,7 @@ namespace DoctorAsh
         )]
     public class DoctorAshTestBaseModule : AbpModule
     {
+ 
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
             PreConfigure<AbpIdentityServerBuilderOptions>(options =>
@@ -39,6 +41,9 @@ namespace DoctorAsh
             });
 
             context.Services.AddAlwaysAllowAuthorization();
+            
+            var configuration = context.Services.GetConfiguration();
+            context.Services.AddSingleton<IWebHostEnvironment>(new WebHostEnvironmentMock());
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using DoctorAsh.Appointments;
 using Volo.Abp;
@@ -10,22 +11,27 @@ namespace DoctorAsh.Doctors
     public class Doctor: FullAuditedAggregateRoot<Guid>
     {
         protected Doctor(){}
-        internal Doctor(Guid id):base(id){}
+        private Doctor(Guid id,Guid userId):base(id)=> UserId = userId;
+
+        public static Doctor Create(Guid id,Guid userId)
+        {
+
+            return new Doctor(id,userId);
+
+        }
         public Guid UserId { get; set; }
-        public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<WorkingHour> WorkingHours{get;set;}
+        public ICollection<Appointment> Appointments { get; set; } = new Collection<Appointment>();
+        public ICollection<WorkingHour> WorkingHours{get;set;} = new Collection<WorkingHour>();
         public AvailablityStatusType Status { get; set; }
         public double RatingScore { get; set; }
 
         public Doctor(
             Guid id,
-            ICollection<Appointment> appointments,
             ICollection<WorkingHour> workingHours,
             AvailablityStatusType status,
             double ratingScore
         ) : base(id)
         {
-            Appointments = appointments;
             WorkingHours = workingHours;
             Status = status;
             RatingScore = ratingScore;

@@ -14,20 +14,14 @@ namespace DoctorAsh.Appointments.Events
 {
     public class AppointmentCreated : EntityChangedEventData<Appointment>, IAppointmentEventData
     {
+        public Guid AppointmentId { get ; init; }
         public AppointmentCreated(Appointment entity) : base(entity)
         {
         }
 
-        public Guid AppointmentId { get ; init; }
     }
     public class AppointmentCreatedHandler : AppointmentEventHandler<AppointmentCreated>
     {
-
-        private readonly IExternalUserLookupServiceProvider _userLookupServiceProvider;
-        private readonly IBackgroundJobManager _backgroundJobManager;
-        private readonly IAppointmentRepository _appointmentRepository;
-        private Guid _appointmentId = Guid.Empty;
-
         public AppointmentCreatedHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, ILogger<AppointmentEventHandler<AppointmentCreated>> logger) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository, logger)
         {
         }
