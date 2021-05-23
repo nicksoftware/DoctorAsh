@@ -25,29 +25,27 @@ namespace DoctorAsh.Appointments.Events
             public AppointmentMissedEventHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, ILogger<AppointmentEventHandler<AppointmentMissed>> logger) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository, logger)
             {
             }
-
             protected override async Task SendDoctorEmailAsync()
             {
-                var emailBody = $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been Created</p>";
+                var emailBody = $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been Missed</p>";
 
                 await  BackgroundJobManager.EnqueueAsync(
                     new EmailSendingArgs
                     {
                         EmailAddress = DoctorUser.Email,
-                        Subject = "Appointment Created",
+                        Subject = "Appointment Missed",
                         Body = emailBody
                     }
                 );
             }
-
             protected override async Task SendPatientEmailAsync()
             {
-                var emailBody = $"<p>Your Appointment with Doctor {GetDoctorFullNames()} ,has been Created</p>";
+                var emailBody = $"<p>Your Appointment with Doctor {GetDoctorFullNames()} ,has been Missed</p>";
                 await  BackgroundJobManager.EnqueueAsync(
                     new EmailSendingArgs
                     {
                         EmailAddress = PatientUser.Email,
-                        Subject = "Appointment Created",
+                        Subject = "Appointment Missed",
                         Body = emailBody
                     }
                 );
