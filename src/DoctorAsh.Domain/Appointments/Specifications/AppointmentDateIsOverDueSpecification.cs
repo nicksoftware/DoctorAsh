@@ -5,11 +5,11 @@ using Volo.Abp.Timing;
 
 namespace DoctorAsh.Appointments
 {
-    public class AppointmentDateIsOverDueSpecification : Specification<Appointment>
+    public class AppointmentDateOverDueSpecification : Specification<Appointment>
     {
         private readonly IClock _clock;
 
-        public AppointmentDateIsOverDueSpecification(IClock clock)
+        public AppointmentDateOverDueSpecification(IClock clock)
         {
             _clock = clock;
         }
