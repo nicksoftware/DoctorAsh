@@ -36,12 +36,14 @@ namespace DoctorAsh.Appointments
 
         public override async Task<AppointmentDto> CreateAsync(CreateAppointmentDto input)
         {
-            var doctor =await  _doctorRepository
-            .FindAsync(new DoctorIsAvailableSpecification(input.StartDate,(DateTime)input.EndDate).ToExpression());
-            
-            if(doctor == null || doctor.Id != input.DoctorId ) throw new DoctorIsNotAvailableException(input.StartDate,(DateTime)input.EndDate);
-            
+            var doctor = await _doctorRepository
+            .FindAsync(new DoctorIsAvailableSpecification(input.StartDate, (DateTime)input.EndDate).ToExpression());
+
+            if (doctor == null || doctor.Id != input.DoctorId) throw new DoctorIsNotAvailableException(input.StartDate, (DateTime)input.EndDate);
+
             var createdAppointment = await _appointmentManager.CreateAsync(
+                doctorId:  input.DoctorId,
+                patientId: input.PatientId,
                 title: input.Title,
                 description: input.Description,
                 startDate: input.StartDate,
@@ -72,7 +74,7 @@ namespace DoctorAsh.Appointments
         public async Task<AppointmentDto> RescheduleAsync(Guid id, RescheduleAppointmentDto input)
         {
             Appointment appointment = await GetIfExists(id);
-            var updatedAppointment =   await _appointmentManager.RescheduleAsync(appointment, input.NewDate, input.NewEndDate);
+            var updatedAppointment = await _appointmentManager.RescheduleAsync(appointment, input.NewDate, input.NewEndDate);
 
             return MapToGetOutputDto(updatedAppointment);
         }

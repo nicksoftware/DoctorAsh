@@ -23,12 +23,12 @@ namespace DoctorAsh.Appointments
 
         internal Appointment(
             [NotNull] Guid id,
-            [NotNull] string title,
-            [NotNull] string description
+            [NotNull] Guid doctorId,
+            [NotNull] Guid patientId
             ) : base(id)
         {
-            Title = title;
-            Description = description;
+            DoctorId = doctorId;
+            PatientId = patientId;
         }
 
         internal void SetStartDate(DateTime startDate)

@@ -24,30 +24,32 @@ namespace DoctorAsh
 
         }
 
-        private async Task SeedAppointmentsAsync(DataSeedContext context)
+        private  Task SeedAppointmentsAsync(DataSeedContext context)
         {
-            var appointments = new List<Appointment>();
-            var rollDice = new Random();
-            var userIds = new Guid[]{ TestData.User1Id, TestData.User2Id };
+            return Task.CompletedTask;
+            // var appointments = new List<Appointment>();
+            // var rollDice = new Random();
+            // var userIds = new Guid[]{ TestData.User1Id, TestData.User2Id };
             
-            for (int i = 0; i < 10; i++)
-            {
-                var id = Guid.NewGuid();
-                var title = $"Appointment {i}";
-                var description = $"Appointment {i} description";
-                var start = new DateTime(2021, 05, 13).AddDays(i);
-                var endDate = new DateTime(2021, 05, 13).AddDays(i+2);
-                var recurrence = (RecurrenceType)rollDice.Next(0, 3);
-                var appointment = new Appointment(id, title, description);
+            // for (int i = 0; i < 10; i++)
+            // {
+            //     var id = Guid.NewGuid();
+            //     var title = $"Appointment {i}";
+            //     var description = $"Appointment {i} description";
+            //     var start = new DateTime(2021, 05, 13).AddDays(i);
+            //     var endDate = new DateTime(2021, 05, 13).AddDays(i+2);
+            //     var recurrence = (RecurrenceType)rollDice.Next(0, 3);
+            //     var appointment = new Appointment(id, Guid.NewGuid(), Guid.NewGuid());
+            //     appointment.Title = title;
+            //     appointment.Description = description;
+            //     appointment.SetStartDate(start);
+            //     appointment.SetEndDate(endDate);
+            //     appointment.CreatorId = userIds[rollDice.Next(0, userIds.Length)];
 
-                appointment.SetStartDate(start);
-                appointment.SetEndDate(endDate);
-                appointment.CreatorId = userIds[rollDice.Next(0, userIds.Length)];
+            //     appointments.Add(appointment);
+            // };
 
-                appointments.Add(appointment);
-            };
-
-            await _appointmentRepository.InsertManyAsync(appointments, true);
+            // await _appointmentRepository.InsertManyAsync(appointments, true);
         }
     }
 }

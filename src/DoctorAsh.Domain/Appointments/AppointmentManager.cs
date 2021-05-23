@@ -28,6 +28,8 @@ namespace DoctorAsh.Appointments
             _clock = clock;
         }
         public async Task<Appointment> CreateAsync(
+            [NotNull] Guid doctorId,
+            [NotNull] Guid patientId,
             [NotNull] string title,
             [NotNull] string description,
             [NotNull] DateTime startDate,
@@ -37,6 +39,8 @@ namespace DoctorAsh.Appointments
             var ab = new AppointmentBuilder(GuidGenerator.Create());
 
             var appointment = ab
+                .WithDoctor(doctorId)
+                .WithPatient(patientId)
                 .WithTitle(title)
                 .WithDescription(description)
                 .WithRecurrence(recurrence)
@@ -55,7 +59,7 @@ namespace DoctorAsh.Appointments
             appointment.Title = Check.NotNullOrWhiteSpace(title, nameof(title));
             appointment.Description = Check.NotNullOrWhiteSpace(title, nameof(descriptions));
 
-            return await _appointmentRepo.UpdateAsync(appointment,true).ConfigureAwait(false);
+            return await _appointmentRepo.UpdateAsync(appointment, true).ConfigureAwait(false);
         }
 
         public async Task<Appointment> RescheduleAsync(
@@ -66,7 +70,7 @@ namespace DoctorAsh.Appointments
             appointment.SetStartDate(startDate);
             appointment.SetEndDate(endDate);
 
-            return await _appointmentRepo.UpdateAsync(appointment,true).ConfigureAwait(false);
+            return await _appointmentRepo.UpdateAsync(appointment, true).ConfigureAwait(false);
         }
 
         public async Task<Appointment> CancelAsync(
@@ -74,8 +78,8 @@ namespace DoctorAsh.Appointments
             [NotNull] string reason
         )
         {
-            appointment.Cancel(reason,_clock.Now);
-            var cancelledAppointment = await _appointmentRepo.UpdateAsync(appointment,true);
+            appointment.Cancel(reason, _clock.Now);
+            var cancelledAppointment = await _appointmentRepo.UpdateAsync(appointment, true);
             return cancelledAppointment;
         }
 
@@ -84,8 +88,8 @@ namespace DoctorAsh.Appointments
             Appointment appointment)
         {
             appointment.ReActivate();
-            
-            var activatedAppointment = await _appointmentRepo.UpdateAsync(appointment,true);
+
+            var activatedAppointment = await _appointmentRepo.UpdateAsync(appointment, true);
             return appointment;
         }
 

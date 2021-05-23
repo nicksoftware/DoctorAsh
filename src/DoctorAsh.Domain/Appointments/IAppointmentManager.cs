@@ -6,7 +6,10 @@ namespace DoctorAsh.Appointments
 {
     public interface IAppointmentManager
     {
-        Task<Appointment> CreateAsync([NotNull] string title,
+        Task<Appointment> CreateAsync(
+        [NotNull] Guid doctorId,
+        [NotNull] Guid patientId,
+        [NotNull] string title,
         [NotNull] string description,
         [NotNull] DateTime startDate,
         DateTime endDate,
@@ -16,7 +19,7 @@ namespace DoctorAsh.Appointments
             [NotNull] Appointment appointment,
             [NotNull] DateTime startDate,
             [NotNull] DateTime endDate);
-        
+
         Task<Appointment> CancelAsync(
             [NotNull] Appointment appointment,
             [NotNull] string reason

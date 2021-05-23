@@ -6,6 +6,7 @@ namespace DoctorAsh.Appointments.Dtos
     public class CreateAppointmentDto
     {
         public Guid DoctorId { get; set; }
+        public Guid PatientId { get; set; }
         public string Title { get; set; }
 
         public string Description { get; set; }

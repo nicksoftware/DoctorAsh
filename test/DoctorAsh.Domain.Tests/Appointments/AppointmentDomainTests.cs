@@ -8,7 +8,7 @@ namespace DoctorAsh.Appointments
 {
     public class AppointmentTests : DoctorAshDomainTestBase
     {
-        private Appointment appointment = new Appointment(Guid.NewGuid(), "Test Appointment", "Appointment description");
+        private Appointment appointment = new Appointment(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         public AppointmentTests()
         {

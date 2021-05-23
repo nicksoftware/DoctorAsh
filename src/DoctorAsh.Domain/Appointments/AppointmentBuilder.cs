@@ -11,6 +11,8 @@ namespace DoctorAsh.Appointments
         private DateTime? _endDate = null;
         private RecurrenceType _recurrence = RecurrenceType.Once;
         private StatusType _status = StatusType.AwaitingApproval;
+        private Guid _patientId = Guid.Empty;
+        private Guid _doctorId = Guid.Empty;
 
         internal AppointmentBuilder(Guid appointmentId)
         {
@@ -18,7 +20,9 @@ namespace DoctorAsh.Appointments
         }
         internal Appointment Build()
         {
-            var appointment = new Appointment(id: _id, _title, _description);
+            var appointment = new Appointment(id: _id, _doctorId,_patientId);
+            appointment.Title = _title;
+            appointment.Description = _description;
             appointment.SetStartDate(_startDate);
             appointment.SetEndDate((DateTime)_endDate);
             appointment.Recurrence = _recurrence;
@@ -40,6 +44,18 @@ namespace DoctorAsh.Appointments
         internal AppointmentBuilder WithStartDate(DateTime value)
         {
             _startDate = value;
+            return this;
+        }
+
+        internal AppointmentBuilder WithPatient(Guid patientId)
+        {
+            _patientId = patientId;
+            return this;
+        }
+
+        internal AppointmentBuilder WithDoctor(Guid doctorId)
+        {
+            _doctorId = doctorId;
             return this;
         }
 
