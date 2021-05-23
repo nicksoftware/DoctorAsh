@@ -4,15 +4,18 @@ using NSubstitute;
 using Xunit;
 using Shouldly;
 using Volo.Abp.EventBus.Local;
+using Volo.Abp.Timing;
 
 namespace DoctorAsh.Appointments
 {
     public sealed class AppointmentManagerTests : DoctorAshDomainTestBase
     {
         private readonly IAppointmentRepository _repository;
+        private readonly IClock _clock;
         public AppointmentManagerTests()
         {
             _repository = GetService<IAppointmentRepository>();
+            _clock = GetService<IClock>();
         }
 
         [Fact(Skip = "Test is buggy")]
@@ -24,8 +27,9 @@ namespace DoctorAsh.Appointments
             var start = DateTime.Now.AddDays(2);
             var end = DateTime.Now.AddDays(4);
             var fakeEventBus = Substitute.For<ILocalEventBus>();
+
             //When
-            var manager = new AppointmentManager(_repository,fakeEventBus);
+            var manager = new AppointmentManager(_repository,fakeEventBus,_clock);
 
             var result = await WithUnitOfWorkAsync<Appointment>(async () => 
                 await manager.CreateAsync(title, description, start, end, RecurrenceType.Once));
