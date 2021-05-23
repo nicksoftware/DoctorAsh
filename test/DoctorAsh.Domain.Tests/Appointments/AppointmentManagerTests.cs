@@ -32,7 +32,7 @@ namespace DoctorAsh.Appointments
             var manager = new AppointmentManager(_repository,fakeEventBus,_clock);
 
             var result = await WithUnitOfWorkAsync<Appointment>(async () => 
-                await manager.CreateAsync(title, description, start, end, RecurrenceType.Once));
+            await manager.CreateAsync(title, description, start, end, RecurrenceType.Once));
             
             result.Title.ShouldBe(title);
             result.Description.ShouldBe(description);
