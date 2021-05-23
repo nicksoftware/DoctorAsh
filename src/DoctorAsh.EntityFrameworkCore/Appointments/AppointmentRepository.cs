@@ -25,7 +25,7 @@ namespace DoctorAsh.Appointments
             
 
             var appointments = dbSet
-            .Where(x=>!x.IsCancelled && x.Status != StatusType.Missed && _clock.Now > x.StartDate ).ToList();
+            .Where(new AppointmentDateIsOverDueSpecification(_clock)).ToList();
 
             appointments.ForEach(appointment => appointment.SetToMissed());
             
