@@ -1,8 +1,8 @@
 # Doctor Ash
 <hr/>
 
-This project is a Domain Driven Development and Test Driven Development experiment project based on Abp.
-It is a simple Appointment website built with MVC  ASP.NET Core and Abp framework following the principles of Clean Architecture and industry standards.
+This project is a Domain Driven Design project .
+It is an Appointment systm built with MVC  ASP.NET Core and Abp framework following the principles of Clean Architecture and industry standards.
 
 ## Technologies
 
