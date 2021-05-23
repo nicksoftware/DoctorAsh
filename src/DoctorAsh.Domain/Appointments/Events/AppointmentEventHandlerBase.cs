@@ -17,7 +17,6 @@ namespace DoctorAsh.Appointments.Events
         protected IDoctorRepository DoctorRepository {get;set;}
         protected IPatientRepository PatientRepository {get;set;}
         protected IExternalUserLookupServiceProvider UserLookupServiceProvider{get;set;}
-
         protected Appointment Appointment = null;
         protected IUserData DoctorUser =null;
         protected IUserData PatientUser = null;
@@ -42,15 +41,8 @@ namespace DoctorAsh.Appointments.Events
         {
             try
             {
-                EventData = (IAppointmentEventData)(T)eventData;
-                Appointment = await AppointmentRepository.FindAsync(eventData.AppointmentId);
-                var doctor = await DoctorRepository.FindAsync(Appointment.DoctorId);
-                var patient = await PatientRepository.FindAsync(Appointment.PatientId);
-                DoctorUser = await UserLookupServiceProvider.FindByIdAsync(doctor.UserId);
-                PatientUser = await UserLookupServiceProvider.FindByIdAsync(patient.UserId);
-
+                await InitialProperties(eventData);
                 await TrySendDoctorEmailAsync();
-
                 await TrySendPatientEmailAsync();
             }
             catch (System.Exception ex)
@@ -60,7 +52,17 @@ namespace DoctorAsh.Appointments.Events
             }
         }
 
-        private async Task TrySendPatientEmailAsync()
+        private async Task InitialProperties(IAppointmentEventData eventData)
+        {
+            EventData = eventData;
+            Appointment = await AppointmentRepository.FindAsync(eventData.AppointmentId);
+            var doctor = await DoctorRepository.FindAsync(Appointment.DoctorId);
+            var patient = await PatientRepository.FindAsync(Appointment.PatientId);
+            DoctorUser = await UserLookupServiceProvider.FindByIdAsync(doctor.UserId);
+            PatientUser = await UserLookupServiceProvider.FindByIdAsync(patient.UserId);
+        }
+
+        protected virtual async Task TrySendPatientEmailAsync()
         {
             if (PatientUser.EmailConfirmed)
             {
@@ -71,7 +73,7 @@ namespace DoctorAsh.Appointments.Events
                 Logger.LogWarning($"Failed to send Email : User {PatientUser.Id} has not Confirmed Email");
         }
 
-        private async Task TrySendDoctorEmailAsync()
+        protected virtual async Task TrySendDoctorEmailAsync()
         {
             if (DoctorUser.EmailConfirmed)
             {
