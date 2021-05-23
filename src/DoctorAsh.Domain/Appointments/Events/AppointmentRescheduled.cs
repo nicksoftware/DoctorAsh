@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DoctorAsh.Doctors;
 using DoctorAsh.Emailing;
 using DoctorAsh.Patients;
+using Microsoft.Extensions.Logging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
@@ -28,7 +29,7 @@ namespace DoctorAsh.Appointments.Events
     public class AppointmentRescheduledHandler :
         AppointmentEventHandler<AppointmentRescheduled>
     {
-        public AppointmentRescheduledHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository)
+        public AppointmentRescheduledHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, ILogger<AppointmentEventHandler<AppointmentRescheduled>> logger) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository, logger)
         {
         }
 

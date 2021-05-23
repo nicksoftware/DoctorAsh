@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DoctorAsh.Doctors;
 using DoctorAsh.Emailing;
 using DoctorAsh.Patients;
+using Microsoft.Extensions.Logging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.EventBus;
 using Volo.Abp.Users;
@@ -21,7 +22,8 @@ namespace DoctorAsh.Appointments.Events
         public class AppointmentReactivatedHandler : AppointmentEventHandler<AppointmemtReactivated>
         {
             public AppointmentReactivatedHandler(
-                IExternalUserLookupServiceProvider userLookupServiceProvider, 
+                IExternalUserLookupServiceProvider userLookupServiceProvider,
+                ILogger<AppointmentEventHandler<AppointmemtReactivated>> logger, 
                 IBackgroundJobManager backgroundJobManager,
                 IAppointmentRepository appointmentRepository,
                 IDoctorRepository doctorRepository, 
@@ -31,7 +33,8 @@ namespace DoctorAsh.Appointments.Events
                     backgroundJobManager,
                     appointmentRepository,
                     doctorRepository,
-                    patientRepository)
+                    patientRepository,
+                    logger)
             {
             }
 

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DoctorAsh.Doctors;
 using DoctorAsh.Emailing;
 using DoctorAsh.Patients;
+using Microsoft.Extensions.Logging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Entities.Events;
@@ -27,8 +28,10 @@ namespace DoctorAsh.Appointments.Events
         private readonly IAppointmentRepository _appointmentRepository;
         private Guid _appointmentId = Guid.Empty;
 
-        public AppointmentCreatedHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository) 
-        : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository){}
+        public AppointmentCreatedHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, ILogger<AppointmentEventHandler<AppointmentCreated>> logger) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository, logger)
+        {
+        }
+
         protected override async Task SendDoctorEmailAsync()
         {
             var emailBody = $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been Created</p>";

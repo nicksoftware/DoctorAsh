@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DoctorAsh.Doctors;
 using DoctorAsh.Emailing;
 using DoctorAsh.Patients;
+using Microsoft.Extensions.Logging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.EventBus;
 using Volo.Abp.Users;
@@ -24,21 +25,10 @@ namespace DoctorAsh.Appointments.Events
 
     public class AppointmentCancelledHandler : AppointmentEventHandler<AppointmentCancelled>
     {
+        public AppointmentCancelledHandler(IExternalUserLookupServiceProvider userLookupServiceProvider, IBackgroundJobManager backgroundJobManager, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, ILogger<AppointmentEventHandler<AppointmentCancelled>> logger) : base(userLookupServiceProvider, backgroundJobManager, appointmentRepository, doctorRepository, patientRepository, logger)
+        {
+        }
 
-            public AppointmentCancelledHandler(
-                IExternalUserLookupServiceProvider userLookupServiceProvider, 
-                IBackgroundJobManager backgroundJobManager,
-                IAppointmentRepository appointmentRepository,
-                IDoctorRepository doctorRepository, 
-                IPatientRepository patientRepository)
-                : base(
-                    userLookupServiceProvider,
-                    backgroundJobManager,
-                    appointmentRepository,
-                    doctorRepository,
-                    patientRepository)
-            {
-            }
         protected override async Task SendPatientEmailAsync()
             {
                 var data =(AppointmentCancelled) EventData;
