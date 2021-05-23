@@ -43,16 +43,17 @@ namespace DoctorAsh.Doctors
                 StartTime = DateTime.Parse("7:00 AM"),
                 EndTime = DateTime.Parse("10:30 AM")
             };
+            doctor.AddWorkingHour(workingHour);
 
+            var newWorkingHour = new WorkingHour(doctorId, DayOfWeek.Monday)
+            {
+                StartTime = DateTime.Parse("8:00 AM"),
+                EndTime = DateTime.Parse("10:30 AM")
+            };
             //When
             var exception = Assert.Throws<WorkingHourForDayGivenAlreadySetException>(() =>
                 {
-                    var newWorkingHour = new WorkingHour(doctorId, DayOfWeek.Monday)
-                    {
-                        StartTime = DateTime.Parse("8:00 AM"),
-                        EndTime = DateTime.Parse("10:30 AM")
-                    };
-                    doctor.AddWorkingHour(workingHour);
+                    doctor.AddWorkingHour(newWorkingHour);
                 }
             );
             //Then
@@ -66,14 +67,15 @@ namespace DoctorAsh.Doctors
             //Given
             var workingHour = new WorkingHour(_doctorId, DayOfWeek.Monday)
             {
-                StartTime = DateTime.Parse("7:00 AM"),
-                EndTime = DateTime.Parse("10:30 AM")
+                StartTime = DateTime.Now.AddHours(1),
+                EndTime = DateTime.Now.AddHours(2),
             };
-
+            _doctor.AddWorkingHour(workingHour);
             //When
-            var existingWorkingHour = _doctor.WorkingHours.FirstOrDefault(x => x.Day == DayOfWeek.Monday);
-            var newStartTime = DateTime.Parse("10:00 AM");
-            var newEndTime = DateTime.Parse("12:30 AM");
+            var existingWorkingHour = _doctor.WorkingHours.First(x => x.Day == DayOfWeek.Monday);
+
+            var newStartTime = DateTime.Now.AddHours(2);
+            var newEndTime = DateTime.Now.AddHours(3);
             existingWorkingHour.StartTime = newStartTime;
             existingWorkingHour.EndTime = newEndTime;
             _doctor.ChangeWorkingHour(existingWorkingHour);
@@ -86,7 +88,7 @@ namespace DoctorAsh.Doctors
         }
 
         [Fact]
-        public void RemoveWorkingHour_ShouldChangeWorkingHour()
+        public void RemoveWorkingHour_ShouldRemoveWorkingHour()
         {
             //Given
             //Given

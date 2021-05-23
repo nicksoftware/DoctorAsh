@@ -39,7 +39,10 @@ namespace DoctorAsh.Doctors
 
         public void AddWorkingHour(WorkingHour workingHour)
         {
-            var dayWorkingOurExists =  WorkingHours.SingleOrDefault(d=>d.Day == workingHour.Day);
+
+            var dayWorkingOurExists =
+                WorkingHours
+                .SingleOrDefault(d=>d.Day == workingHour.Day);   
 
             if(dayWorkingOurExists != null) 
                 throw new WorkingHourForDayGivenAlreadySetException(workingHour.Day);
