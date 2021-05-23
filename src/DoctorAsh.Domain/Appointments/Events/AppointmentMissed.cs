@@ -11,14 +11,11 @@ using Volo.Abp.Users;
 
 namespace DoctorAsh.Appointments.Events
 {
-    public class AppointmentMissed :IAppointmentEventData
+    public class AppointmentMissed : IAppointmentEventData
     {
-        public AppointmentMissed(Guid appointmentId)
-        {
-            AppointmentId = appointmentId;
-        }
+        public AppointmentMissed(Guid appointmentId) => AppointmentId = appointmentId;
 
-        public Guid AppointmentId { get ; init ; }
+        public Guid AppointmentId { get; init; }
 
         public class AppointmentMissedEventHandler : AppointmentEventHandler<AppointmentMissed>
         {
@@ -29,7 +26,7 @@ namespace DoctorAsh.Appointments.Events
             {
                 var emailBody = $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been Missed</p>";
 
-                await  BackgroundJobManager.EnqueueAsync(
+                await BackgroundJobManager.EnqueueAsync(
                     new EmailSendingArgs
                     {
                         EmailAddress = DoctorUser.Email,
@@ -41,7 +38,7 @@ namespace DoctorAsh.Appointments.Events
             protected override async Task SendPatientEmailAsync()
             {
                 var emailBody = $"<p>Your Appointment with Doctor {GetDoctorFullNames()} ,has been Missed</p>";
-                await  BackgroundJobManager.EnqueueAsync(
+                await BackgroundJobManager.EnqueueAsync(
                     new EmailSendingArgs
                     {
                         EmailAddress = PatientUser.Email,
