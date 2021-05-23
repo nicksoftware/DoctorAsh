@@ -19,6 +19,12 @@ namespace DoctorAsh.Appointments
             _clock = clock;
         }
 
+        public async Task<Appointment> GetDoctorAppointmentAtGivenDayAsync(Guid doctorId, DateTime startDate, DateTime? endDate)
+        {
+            var dbSet = await GetDbSetAsync();
+            return dbSet.FirstOrDefault(x=>x.DoctorId == doctorId && (x.StartDate >= startDate && x.StartDate <=(DateTime)endDate));
+        }
+
         public async Task UpdateMissedAppointmentsAsync()
         {
             var dbSet = await GetDbSetAsync();

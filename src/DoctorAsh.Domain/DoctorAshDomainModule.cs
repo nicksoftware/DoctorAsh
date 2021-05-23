@@ -39,7 +39,7 @@ namespace DoctorAsh
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            context.AddBackgroundWorker<MissedApointmentChecerkWorker>();
+            context.AddBackgroundWorker<MissedApointmentCheckerkWorker>();
             base.OnApplicationInitialization(context);
         }
         public override void ConfigureServices(ServiceConfigurationContext context)

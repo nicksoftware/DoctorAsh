@@ -14,10 +14,8 @@ namespace DoctorAsh.Appointments.Events
     {
 
         public AppointmemtReactivated(Guid id) => AppointmentId = id;
-        public Guid AppointmentId { get; init; }
-        public Guid PatientId { get; set; }
-        public Guid DoctorId { get; set; }
 
+        public Guid AppointmentId { get; init; }
 
         public class AppointmentReactivatedHandler : AppointmentEventHandler<AppointmemtReactivated>
         {
@@ -37,11 +35,10 @@ namespace DoctorAsh.Appointments.Events
                     logger)
             {
             }
-
             protected override async Task SendPatientEmailAsync()
             {
                 var emailBody =
-                    $"<p>Your Appointment with Dr {DoctorUser.Name} {DoctorUser.Surname} ,"+
+                    $"<p>Your Appointment with Dr {GetDoctorFullNames()} ,"+
                     $"has been ReActivated,and it is set for {Appointment.StartDate.ToString("dddd, dd MMMM yyyy")} at {Appointment.StartDate.ToString("hh:mm tt")} </p>";
 
                 await  BackgroundJobManager.EnqueueAsync(
@@ -57,7 +54,7 @@ namespace DoctorAsh.Appointments.Events
             protected override async Task SendDoctorEmailAsync()
             {
                 var emailBody =
-                $"<p>Doctor *** Your Appointment with Patient {PatientUser.Name} {PatientUser.Surname} ,has been ReActivated</p>"+
+                $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been ReActivated</p>"+
                 $"<p>and it is set for {Appointment.StartDate.ToString("dddd, dd MMMM yyyy")} at {Appointment.StartDate.ToString("hh:mm tt")} </p>";
 
                 await  BackgroundJobManager.EnqueueAsync(

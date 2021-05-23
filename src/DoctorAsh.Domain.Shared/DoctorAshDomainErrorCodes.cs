@@ -8,5 +8,6 @@
         public const string AppointmentIsActiveException = "DoctorAsh:ErrorCode:0003";
         public const string AppointmentAlreadyCancelledException = "DoctorAsh:ErrorCode:0004";
         public const string WorkingHourForDayGivenAlreadySetException ="DoctorAsh:ErrorCode:0005";
+        public const string DoctorIsNotAvailableException ="DoctorAsh:ErrorCode:0006";
     }
 }

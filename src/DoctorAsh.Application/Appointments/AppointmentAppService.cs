@@ -5,6 +5,9 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities;
+using DoctorAsh.Doctors;
+using DoctorAsh.Doctors.Exceptions;
+using System.Linq;
 
 namespace DoctorAsh.Appointments
 {
@@ -18,17 +21,25 @@ namespace DoctorAsh.Appointments
         protected override string DeletePolicyName { get; set; } = DoctorAshPermissions.Appointment.Delete;
 
         private readonly IAppointmentRepository _repository;
+        private readonly IDoctorRepository _doctorRepository;
         private readonly IAppointmentManager _appointmentManager;
 
-        public AppointmentAppService(IAppointmentRepository repository,
+        public AppointmentAppService(
+        IAppointmentRepository repository,
+        IDoctorRepository doctorRepository,
         IAppointmentManager appointmentManager) : base(repository)
         {
             _repository = repository;
+            _doctorRepository = doctorRepository;
             _appointmentManager = appointmentManager;
         }
 
         public override async Task<AppointmentDto> CreateAsync(CreateAppointmentDto input)
         {
+            var doctor =await  _doctorRepository
+            .FindAsync(new DoctorIsAvailableSpecification(input.StartDate,(DateTime)input.EndDate).ToExpression());
+            
+            if(doctor == null || doctor.Id != input.DoctorId ) throw new DoctorIsNotAvailableException(input.StartDate,(DateTime)input.EndDate);
             
             var createdAppointment = await _appointmentManager.CreateAsync(
                 title: input.Title,
@@ -37,6 +48,7 @@ namespace DoctorAsh.Appointments
                 endDate: (DateTime)input.EndDate,
                 recurrence: input.Recurrence
             );
+
             return MapToGetOutputDto(createdAppointment);
         }
 
@@ -59,9 +71,7 @@ namespace DoctorAsh.Appointments
         }
         public async Task<AppointmentDto> RescheduleAsync(Guid id, RescheduleAppointmentDto input)
         {
-            var appointment = await Repository.FindAsync(id);
-            if(appointment == null) throw new EntityNotFoundException(typeof(Appointment),id);
-
+            Appointment appointment = await GetIfExists(id);
             var updatedAppointment =   await _appointmentManager.RescheduleAsync(appointment, input.NewDate, input.NewEndDate);
 
             return MapToGetOutputDto(updatedAppointment);
@@ -69,12 +79,29 @@ namespace DoctorAsh.Appointments
 
         public async Task<AppointmentDto> CancelAsync(Guid id, CancelAppointmentDto input)
         {
-            var appointment = await Repository.FindAsync(id);
-            if (appointment == null) throw new EntityNotFoundException(typeof(Appointment), id);
-
+            Appointment appointment = await GetIfExists(id);
             var cancelAppointment = await _appointmentManager.CancelAsync(appointment, input.Reason);
-            
+
             return MapToGetOutputDto(cancelAppointment);
         }
+        public async Task ApproveAppointmentAsync(Guid id)
+        {
+            Appointment appointment = await GetIfExists(id);
+            await _appointmentManager.AcceptAsync(appointment);
+        }
+
+        public async Task DeclineAppointmentAsync(Guid id)
+        {
+            Appointment appointment = await GetIfExists(id);
+            await _appointmentManager.DeclineAsync(appointment);
+        }
+
+        private async Task<Appointment> GetIfExists(Guid id)
+        {
+            var appointment = await Repository.FindAsync(id);
+            if (appointment == null) throw new EntityNotFoundException(typeof(Appointment), id);
+            return appointment;
+        }
+
     }
 }

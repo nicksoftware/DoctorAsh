@@ -16,5 +16,7 @@ namespace DoctorAsh.Appointments
     {
         Task<AppointmentDto> RescheduleAsync(Guid id, RescheduleAppointmentDto input);
         Task<AppointmentDto> CancelAsync(Guid id, CancelAppointmentDto input);
+        Task ApproveAppointmentAsync(Guid id);
+        Task DeclineAppointmentAsync(Guid id);
     }
 }

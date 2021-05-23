@@ -9,5 +9,6 @@ namespace DoctorAsh.Appointments
     public interface IAppointmentRepository : IRepository<Appointment, Guid>
     {
         Task UpdateMissedAppointmentsAsync();
+        Task<Appointment> GetDoctorAppointmentAtGivenDayAsync(Guid doctorId,DateTime startDate, DateTime? endDate);
     }
 }

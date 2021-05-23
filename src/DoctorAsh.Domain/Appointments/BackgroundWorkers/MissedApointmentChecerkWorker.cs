@@ -6,9 +6,9 @@ using Volo.Abp.Threading;
 
 namespace DoctorAsh.Appointments
 {
-    public class MissedApointmentChecerkWorker : AsyncPeriodicBackgroundWorkerBase
+    public class MissedApointmentCheckerkWorker : AsyncPeriodicBackgroundWorkerBase
     {
-        public MissedApointmentChecerkWorker(AbpAsyncTimer timer, IServiceScopeFactory serviceScopeFactory)
+        public MissedApointmentCheckerkWorker(AbpAsyncTimer timer, IServiceScopeFactory serviceScopeFactory)
         : base(timer, serviceScopeFactory)
         {
             Timer.Period = 600000; //10 minutes

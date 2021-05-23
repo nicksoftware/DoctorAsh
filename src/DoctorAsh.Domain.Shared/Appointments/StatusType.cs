@@ -8,6 +8,7 @@ namespace DoctorAsh.Appointments
         Approved = 1,
         Cancelled = 2,
         Ended = 3,
-        Missed = 4
+        Missed = 4,
+        Declined = 5
     }
 }

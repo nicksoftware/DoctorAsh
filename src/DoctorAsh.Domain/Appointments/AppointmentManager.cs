@@ -88,5 +88,17 @@ namespace DoctorAsh.Appointments
             var activatedAppointment = await _appointmentRepo.UpdateAsync(appointment,true);
             return appointment;
         }
+
+        public Task AcceptAsync(Appointment appointment)
+        {
+            appointment.Accept();
+            return Task.CompletedTask;
+        }
+
+        public Task DeclineAsync(Appointment appointment)
+        {
+            appointment.Decline();
+            return Task.CompletedTask;
+        }
     }
 }

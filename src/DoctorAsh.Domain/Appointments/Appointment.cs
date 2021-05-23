@@ -15,7 +15,7 @@ namespace DoctorAsh.Appointments
         public DateTime StartDate { get; private set; }
         public DateTime? EndDate { get; private set; }
         public RecurrenceType Recurrence { get; set; }
-        public StatusType Status { get; set; }
+        public StatusType Status { get; internal set; }
         public bool IsCancelled { get; set; }
         public string cancellationReason { get; set; }
 
@@ -45,26 +45,26 @@ namespace DoctorAsh.Appointments
             EndDate = endDate;
         }
 
-        internal void Cancel(string reason,DateTime cancellationDate)
+        internal void Cancel(string reason, DateTime cancellationDate)
         {
-            if (IsCancelled) throw new AppointmentAlreadyCancelledException(Id);
+            CheckIfNotCancelled();
 
             IsCancelled = true;
             Status = StatusType.Cancelled;
             cancellationReason = reason;
 
-            AddLocalEvent(new AppointmentCancelled(Id, reason,cancellationDate));
+            AddLocalEvent(new AppointmentCancelled(Id, reason, cancellationDate));
         }
 
         public void SetToMissed()
         {
             if (Status == StatusType.Missed) return;
-            
+
             Status = StatusType.Missed;
 
             AddLocalEvent(new AppointmentMissed(Id));
         }
-        public void ReActivate()
+        internal void ReActivate()
         {
             if (!IsCancelled) throw new AppointmentIsActiveException(Id);
 
@@ -74,5 +74,28 @@ namespace DoctorAsh.Appointments
 
             AddLocalEvent(new AppointmemtReactivated(Id));
         }
+        internal void Accept()
+        {
+            CheckIfNotCancelled();
+
+            if (Status == StatusType.Approved) return;
+
+            Status = StatusType.Approved;
+        }
+
+        internal void Decline()
+        {
+            CheckIfNotCancelled();
+
+            if (Status == StatusType.Declined) return;
+
+            Status = StatusType.Declined;
+        }
+
+        private void CheckIfNotCancelled()
+        {
+            if (IsCancelled) throw new AppointmentAlreadyCancelledException(Id);
+        }
+
     }
 }

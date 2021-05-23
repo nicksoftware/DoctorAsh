@@ -5,6 +5,7 @@ namespace DoctorAsh.Appointments.Dtos
     [Serializable]
     public class CreateAppointmentDto
     {
+        public Guid DoctorId { get; set; }
         public string Title { get; set; }
 
         public string Description { get; set; }

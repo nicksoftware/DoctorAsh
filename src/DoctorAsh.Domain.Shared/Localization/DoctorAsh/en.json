@@ -31,6 +31,7 @@
     "DoctorAsh:ErrorCode:0003": "Appointment you are trying to Cancel is Already Cancelled",
     "DoctorAsh:ErrorCode:0004": "Appointment is Already Active",
     "DoctorAsh:ErrorCode:0005": "Working Hours on {day} have already been Set, remove or Update the {day}'s working Hour",
+    "DoctorAsh:ErrorCode:0006": "Doctor is not available between {startDate} and {endDate} try booking on different date or time",
     "Permission:Doctor": "Doctors Management",
     "Menu:Doctor": "Doctors",
     "Doctor": "Doctor",

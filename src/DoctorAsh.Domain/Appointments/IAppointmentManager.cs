@@ -22,6 +22,7 @@ namespace DoctorAsh.Appointments
             [NotNull] string reason
         );
         Task<Appointment> ReactivateAsync(Guid id, Appointment appointment);
-
+        Task AcceptAsync(Appointment appointment);
+        Task DeclineAsync(Appointment appointment);
     }
 }
