@@ -67,16 +67,18 @@ namespace DoctorAsh.Appointments
             //Then
         }
         [Fact]
-        public async Task CreateAsync_GivenFutureStartDate_ReturnNewAppointment()
+        public async Task CreateAsync_GivenDrAvailableTime_ReturnNewAppointment()
         {
             //Given
-            var date = DateTime.Now.AddDays(5);
+            var date = DateTime.Now.AddDays(1).AddHours(4);
             var input = new CreateAppointmentDto
             {
+                DoctorId= TestData.DoctorId,
+                PatientId = TestData.PatientId,
                 Title = "Test Appointment",
                 Description = "Testing appointment",
                 StartDate = date,
-                EndDate = date.AddDays(10),
+                EndDate = date.AddHours(1),
                 Recurrence = RecurrenceType.Annually,
             };
 
@@ -127,17 +129,8 @@ namespace DoctorAsh.Appointments
         {
             //Given
             var date = DateTime.Now.AddDays(5);
-
-            var input = new CreateAppointmentDto
-            {
-                Title = "Test Appointment",
-                Description = "Testing appointment",
-                StartDate = date,
-                EndDate = date.AddDays(10),
-                Recurrence = RecurrenceType.Annually,
-            };
-
-            var appointment = await _appointmentAppService.CreateAsync(input);
+            var results = await _appointmentAppService.GetListAsync(new PagedAndSortedResultRequestDto());
+            var appointment = results.Items.First();
 
             var rescheduleInput = new RescheduleAppointmentDto
             {
@@ -159,17 +152,8 @@ namespace DoctorAsh.Appointments
             //Given
             var date = DateTime.Now.AddDays(5);
 
-            var input = new CreateAppointmentDto
-            {
-                Title = "Test Appointment",
-                Description = "Testing appointmnent",
-                StartDate = date,
-                EndDate = date.AddDays(10),
-                Recurrence = RecurrenceType.Annually,
-            };
-
-            var appointment = await _appointmentAppService.CreateAsync(input);
-
+            var results = await _appointmentAppService.GetListAsync(new PagedAndSortedResultRequestDto());
+            var appointment = results.Items.First();
             var rescheduleInput = new RescheduleAppointmentDto
             {
                 NewDate = date.AddMonths(-1),

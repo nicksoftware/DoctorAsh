@@ -69,7 +69,7 @@ namespace DoctorAsh.Appointments
         {
             appointment.SetStartDate(startDate);
             appointment.SetEndDate(endDate);
-
+            appointment.Status = StatusType.AwaitingApproval;
             return await _appointmentRepo.UpdateAsync(appointment, true).ConfigureAwait(false);
         }
 

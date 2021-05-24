@@ -14,7 +14,7 @@ namespace DoctorAsh.Doctors
         private Doctor _doctor;
         public DoctorTests()
         {
-            _doctor = Doctor.Create(_doctorId, TestData.User1Id);
+            _doctor = Doctor.Create(_doctorId, TestData.DoctorId);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace DoctorAsh.Doctors
         public void AddWorkingHour_GivenDayOfExistingWorkingHour_ThrowException()
         {
             var doctorId = Guid.NewGuid();
-            var doctor = Doctor.Create(doctorId, TestData.User1Id);
+            var doctor = Doctor.Create(doctorId, TestData.DoctorId);
             //Given
             var workingHour = new WorkingHour(doctorId, DayOfWeek.Monday)
             {

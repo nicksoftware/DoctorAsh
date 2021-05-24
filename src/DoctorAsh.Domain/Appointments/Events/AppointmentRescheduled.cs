@@ -33,12 +33,6 @@ namespace DoctorAsh.Appointments.Events
         {
         }
 
-        public override Task HandleEventAsync(IAppointmentEventData eventData)
-        {
-            Appointment.Status = StatusType.AwaitingApproval;
-            AppointmentRepository.UpdateAsync(Appointment, true);
-            return base.HandleEventAsync(eventData);
-        }
         protected override async Task SendDoctorEmailAsync()
         {
             var emailBody = $"<p>Doctor {GetDoctorFullNames()} Your Appointment with Patient {GetPatientFullNames()} ,has been Rescheduled Please Approve the new Set Date</p>";

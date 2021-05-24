@@ -18,7 +18,8 @@ namespace DoctorAsh.Doctors
 
         public override Expression<Func<Doctor, bool>> ToExpression()
         {
-            return d => d.WorkingHours.Where(x => x.StartTime.Hour >= startDate.Hour && x.EndTime.Hour <= endDate.Hour).Count() > 0;
+            
+            return d => d.WorkingHours.Where(x =>startDate.Hour > x.StartTime.Hour  && x.EndTime.Hour > endDate.Hour).Count() > 0;
         }
     }
 }

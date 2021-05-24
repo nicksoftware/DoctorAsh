@@ -16,11 +16,9 @@ namespace DoctorAsh.Patients
         }
 
         public Patient(
-            Guid id,
-            ICollection<Appointment> appointments
+            Guid id
         ) : base(id)
         {
-            Appointments = appointments;
         }
     }
 }

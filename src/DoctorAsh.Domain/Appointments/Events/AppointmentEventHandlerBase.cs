@@ -52,7 +52,7 @@ namespace DoctorAsh.Appointments.Events
             }
         }
 
-        private async Task InitialProperties(IAppointmentEventData eventData)
+        protected virtual async Task InitialProperties(IAppointmentEventData eventData)
         {
             EventData = eventData;
             Appointment = await AppointmentRepository.FindAsync(eventData.AppointmentId);
