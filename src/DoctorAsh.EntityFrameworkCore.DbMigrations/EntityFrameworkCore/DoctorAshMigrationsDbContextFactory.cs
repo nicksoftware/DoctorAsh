@@ -16,7 +16,7 @@ namespace DoctorAsh.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<DoctorAshMigrationsDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseNpgsql(configuration.GetConnectionString("Default"));
 
             return new DoctorAshMigrationsDbContext(builder.Options);
         }

@@ -142,7 +142,23 @@ namespace DoctorAsh.IdentityServer
 
             var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
+            // Blazor Client
+            var blazorClientId = configurationSection["DoctorAsh_Blazor:ClientId"];
+            if (!blazorClientId.IsNullOrWhiteSpace())
+            {
+                var blazorRootUrl = configurationSection["DoctorAsh_Blazor:RootUrl"].TrimEnd('/');
 
+                await CreateClientAsync(
+                    name: blazorClientId,
+                    scopes: commonScopes,
+                    grantTypes: new[] { "authorization_code" },
+                    secret: configurationSection["DoctorAsh_Blazor:ClientSecret"]?.Sha256(),
+                    requireClientSecret: false,
+                    redirectUri: $"{blazorRootUrl}/authentication/login-callback",
+                    postLogoutRedirectUri: $"{blazorRootUrl}/authentication/logout-callback",
+                    corsOrigins: new[] { blazorRootUrl.RemovePostFix("/") }
+                );
+            }
             //Console Test / Angular Client
             var consoleAndAngularClientId = configurationSection["DoctorAsh_App:ClientId"];
             if (!consoleAndAngularClientId.IsNullOrWhiteSpace())

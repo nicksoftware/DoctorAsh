@@ -24,8 +24,8 @@ namespace DoctorAsh.EntityFrameworkCore
     public class DoctorAshDbContext : AbpDbContext<DoctorAshDbContext>
     {
         public DbSet<AppUser> Users { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
+         public DbSet<Appointment> Appointments { get; set; }
+         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
         public DoctorAshDbContext(DbContextOptions<DoctorAshDbContext> options)
