@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DoctorAsh.Localization;
 using DoctorAsh.MultiTenancy;
+using DoctorAsh.Permissions;
 using Volo.Abp.Identity.Blazor;
 using Volo.Abp.SettingManagement.Blazor.Menus;
 using Volo.Abp.TenantManagement.Blazor.Navigation;
@@ -18,7 +19,7 @@ public class DoctorAshMenuContributor : IMenuContributor
         }
     }
 
-    private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
+    private async Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         var administration = context.Menu.GetAdministration();
         var l = context.GetLocalizer<DoctorAshResource>();
@@ -45,7 +46,23 @@ public class DoctorAshMenuContributor : IMenuContributor
 
         administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
         administration.SetSubItemOrder(SettingManagementMenus.GroupName, 3);
-
-        return Task.CompletedTask;
+        if (await context.IsGrantedAsync(DoctorAshPermissions.Appointment.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(DoctorAshMenus.Appointment, l["Menu:Appointment"], "/Appointments/Appointment")
+            );
+        }
+        if (await context.IsGrantedAsync(DoctorAshPermissions.Doctor.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(DoctorAshMenus.Doctor, l["Menu:Doctor"], "/Doctors/Doctor")
+            );
+        }
+        if (await context.IsGrantedAsync(DoctorAshPermissions.Patient.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(DoctorAshMenus.Patient, l["Menu:Patient"], "/Patients/Patient")
+            );
+        }
     }
 }

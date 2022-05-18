@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
 using Blazorise.Bootstrap5;
@@ -256,10 +256,10 @@ public class DoctorAshBlazorModule : AbpModule
         app.UseAuthentication();
         app.UseJwtTokenMiddleware();
 
-        if (MultiTenancyConsts.IsEnabled)
-        {
-            app.UseMultiTenancy();
-        }
+        // if (MultiTenancyConsts.IsEnabled)
+        // {
+        //     app.UseMultiTenancy();
+        // }
 
         app.UseUnitOfWork();
         app.UseIdentityServer();

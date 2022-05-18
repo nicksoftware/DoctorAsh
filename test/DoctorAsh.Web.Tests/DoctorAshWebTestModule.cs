@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Globalization;
+using DoctorAsh.Blazor;
+using DoctorAsh.Blazor.Menus;
 using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using DoctorAsh.Localization;
-using DoctorAsh.Web;
-using DoctorAsh.Web.Menus;
 using Volo.Abp.AspNetCore.TestBase;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
@@ -18,7 +18,7 @@ namespace DoctorAsh
 {
     [DependsOn(
         typeof(AbpAspNetCoreTestBaseModule),
-        typeof(DoctorAshWebModule),
+        typeof(DoctorAshBlazorModule),
         typeof(DoctorAshApplicationTestModule)
     )]
     public class DoctorAshWebTestModule : AbpModule
@@ -27,7 +27,7 @@ namespace DoctorAsh
         {
             context.Services.PreConfigure<IMvcBuilder>(builder =>
             {
-                builder.PartManager.ApplicationParts.Add(new AssemblyPart(typeof(DoctorAshWebModule).Assembly));
+                builder.PartManager.ApplicationParts.Add(new AssemblyPart(typeof(DoctorAshBlazorModule).Assembly));
             });
         }
 

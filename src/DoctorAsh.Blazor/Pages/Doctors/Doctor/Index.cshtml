@@ -1,0 +1,47 @@
+@page
+@using DoctorAsh.Blazor.Menus
+@using DoctorAsh.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using DoctorAsh.Localization
+@model DoctorAsh.Blazor.Pages.Appointments.Appointment.IndexModel
+@inject IPageLayout _pageLayout
+@inject IHtmlLocalizer<DoctorAshResource> _l
+@inject IAuthorizationService _authorization
+@{
+    _pageLayout.Content.Title = _l["Doctor"].Value;
+    _pageLayout.Content.BreadCrumb.Add(_l["Menu:Doctor"].Value);
+    _pageLayout.Content.MenuItemName = DoctorAshMenus.Doctor;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Doctors/Doctor/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Doctors/Doctor/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@_l["Doctor"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+			    @if (await _authorization.IsGrantedAsync(DoctorAshPermissions.Doctor.Create))
+                {
+                <abp-button id="NewDoctorButton"
+                            text="@_l["CreateDoctor"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="DoctorTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

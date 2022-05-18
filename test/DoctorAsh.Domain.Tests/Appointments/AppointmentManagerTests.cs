@@ -22,7 +22,7 @@ namespace DoctorAsh.Appointments
         public async Task CreateAsync()
         {
             //Given
-            Guid patientId = TestData.PatientId;
+            var patientId = TestData.PatientId;
             Guid doctorId = TestData.DoctorId;
             const string title = "Test builder";
             const string description = "Test builder Appointment";

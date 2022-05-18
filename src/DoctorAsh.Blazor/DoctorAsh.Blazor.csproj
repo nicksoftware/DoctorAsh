@@ -40,6 +40,24 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
+    <None Update="Pages\Patients\Patient\index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Patients\Patient\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Doctors\Doctor\index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Doctors\Doctor\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Appointments\Appointment\index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Appointments\Appointment\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +67,18 @@
     <None Update="Pages\**\*.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Appointments\Appointment\CreateModal.cshtml" />
+    <AdditionalFiles Include="Pages\Appointments\Appointment\EditModal.cshtml" />
+    <AdditionalFiles Include="Pages\Appointments\Appointment\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Doctors\Doctor\CreateModal.cshtml" />
+    <AdditionalFiles Include="Pages\Doctors\Doctor\EditModal.cshtml" />
+    <AdditionalFiles Include="Pages\Doctors\Doctor\Index.cshtml" />
+    <AdditionalFiles Include="Pages\Patients\Patient\CreateModal.cshtml" />
+    <AdditionalFiles Include="Pages\Patients\Patient\EditModal.cshtml" />
+    <AdditionalFiles Include="Pages\Patients\Patient\Index.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+    <ProjectReference Include="..\..\src\DoctorAsh.Blazor\DoctorAsh.Blazor.csproj" />
     <ProjectReference Include="..\DoctorAsh.Application.Tests\DoctorAsh.Application.Tests.csproj" />
     <ProjectReference Include="..\..\src\DoctorAsh.Web\DoctorAsh.Web.csproj" />
     <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="5.2.2" />
