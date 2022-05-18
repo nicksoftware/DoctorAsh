@@ -1,3 +1,4 @@
+using System;
 using DoctorAsh.Patients;
 using DoctorAsh.Doctors;
 using DoctorAsh.Appointments;
@@ -53,6 +54,7 @@ namespace DoctorAsh.EntityFrameworkCore
                  * See also DoctorAshMigrationsDbContextFactory for EF Core tooling. */
                 options.UseNpgsql();
             });
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
     }
 }

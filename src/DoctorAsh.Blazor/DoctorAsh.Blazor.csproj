@@ -1,32 +1,54 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
-    <BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
-    <PublishTrimmed>false</PublishTrimmed>
+    <TargetFramework>net6.0</TargetFramework>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <UserSecretsId>DoctorAsh-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Bootstrap" Version="0.9.3.5" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.3.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.*" />
+    <PackageReference Include="Blazorise.Bootstrap5" Version="1.0.2" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.2" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="4.3.3" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme" Version="4.3.3" />
+    <ProjectReference Include="..\DoctorAsh.Application\DoctorAsh.Application.csproj" />
+    <ProjectReference Include="..\DoctorAsh.HttpApi\DoctorAsh.HttpApi.csproj" />
+    <ProjectReference Include="..\DoctorAsh.EntityFrameworkCore\DoctorAsh.EntityFrameworkCore.csproj" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.Swashbuckle" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.BasicTheme" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.Identity.Blazor.Server" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Blazor.Server" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Blazor.Server" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Blazor.WebAssembly" Version="4.3.3" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Blazor.WebAssembly" Version="4.3.3" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Blazor.WebAssembly" Version="4.3.3" />
+    <Compile Remove="Logs\**" />
+    <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <None Remove="Logs\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DoctorAsh.HttpApi.Client\DoctorAsh.HttpApi.Client.csproj" />
+    <None Update="Pages\**\*.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\**\*.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,10 @@
-﻿namespace DoctorAsh.Blazor.Menus
+﻿namespace DoctorAsh.Blazor.Menus;
+
+public class DoctorAshMenus
 {
-    public class DoctorAshMenus
-    {
-        private const string Prefix = "DoctorAsh";
-        public const string Home = Prefix + ".Home";
+    private const string Prefix = "DoctorAsh";
+    public const string Home = Prefix + ".Home";
 
-        //Add your menu items here...
+    //Add your menu items here...
 
-    }
 }

@@ -1,71 +1,51 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading.Tasks;
 using DoctorAsh.Localization;
-using Volo.Abp.Account.Localization;
+using DoctorAsh.MultiTenancy;
+using Volo.Abp.Identity.Blazor;
+using Volo.Abp.SettingManagement.Blazor.Menus;
+using Volo.Abp.TenantManagement.Blazor.Navigation;
 using Volo.Abp.UI.Navigation;
-using Volo.Abp.Users;
 
-namespace DoctorAsh.Blazor.Menus
+namespace DoctorAsh.Blazor.Menus;
+
+public class DoctorAshMenuContributor : IMenuContributor
 {
-    public class DoctorAshMenuContributor : IMenuContributor
+    public async Task ConfigureMenuAsync(MenuConfigurationContext context)
     {
-        private readonly IConfiguration _configuration;
-
-        public DoctorAshMenuContributor(IConfiguration configuration)
+        if (context.Menu.Name == StandardMenus.Main)
         {
-            _configuration = configuration;
+            await ConfigureMainMenuAsync(context);
+        }
+    }
+
+    private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
+    {
+        var administration = context.Menu.GetAdministration();
+        var l = context.GetLocalizer<DoctorAshResource>();
+
+        context.Menu.Items.Insert(
+            0,
+            new ApplicationMenuItem(
+                DoctorAshMenus.Home,
+                l["Menu:Home"],
+                "/",
+                icon: "fas fa-home",
+                order: 0
+            )
+        );
+
+        if (MultiTenancyConsts.IsEnabled)
+        {
+            administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
+        }
+        else
+        {
+            administration.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
         }
 
-        public async Task ConfigureMenuAsync(MenuConfigurationContext context)
-        {
-            if (context.Menu.Name == StandardMenus.Main)
-            {
-                await ConfigureMainMenuAsync(context);
-            }
-            else if (context.Menu.Name == StandardMenus.User)
-            {
-                await ConfigureUserMenuAsync(context);
-            }
-        }
+        administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
+        administration.SetSubItemOrder(SettingManagementMenus.GroupName, 3);
 
-        private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
-        {
-            var l = context.GetLocalizer<DoctorAshResource>();
-
-            context.Menu.Items.Insert(
-                0,
-                new ApplicationMenuItem(
-                    DoctorAshMenus.Home,
-                    l["Menu:Home"],
-                    "/",
-                    icon: "fas fa-home"
-                )
-            );
-
-            return Task.CompletedTask;
-        }
-
-        private Task ConfigureUserMenuAsync(MenuConfigurationContext context)
-        {
-            var accountStringLocalizer = context.GetLocalizer<AccountResource>();
-            var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
-
-            var identityServerUrl = _configuration["AuthServer:Authority"] ?? "";
-
-            if (currentUser.IsAuthenticated)
-            {
-                context.Menu.AddItem(new ApplicationMenuItem(
-                    "Account.Manage",
-                    accountStringLocalizer["ManageYourProfile"],
-                    $"{identityServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
-                    icon: "fa fa-cog",
-                    order: 1000,
-                    null));
-            }
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

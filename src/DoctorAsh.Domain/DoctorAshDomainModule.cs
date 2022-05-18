@@ -37,9 +37,9 @@ namespace DoctorAsh
     public class DoctorAshDomainModule : AbpModule
     {
 
-        public override void OnApplicationInitialization(ApplicationInitializationContext context)
+        public override async void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            context.AddBackgroundWorker<MissedApointmentCheckerkWorker>();
+           await context.AddBackgroundWorkerAsync<MissedApointmentCheckerkWorker>();
             base.OnApplicationInitialization(context);
         }
         public override void ConfigureServices(ServiceConfigurationContext context)

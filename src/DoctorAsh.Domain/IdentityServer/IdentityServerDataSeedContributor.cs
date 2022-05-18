@@ -111,7 +111,9 @@ namespace DoctorAsh.IdentityServer
 
         private async Task<ApiScope> CreateApiScopeAsync(string name)
         {
-            var apiScope = await _apiScopeRepository.GetByNameAsync(name);
+            var apiScopes = await _apiScopeRepository.GetListByNameAsync(new[]{name});
+            var apiScope = apiScopes.Find(x => x.Name == name);
+
             if (apiScope == null)
             {
                 apiScope = await _apiScopeRepository.InsertAsync(

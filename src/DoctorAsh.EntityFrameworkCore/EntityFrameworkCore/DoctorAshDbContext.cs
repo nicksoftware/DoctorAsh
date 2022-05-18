@@ -56,5 +56,7 @@ namespace DoctorAsh.EntityFrameworkCore
 
             builder.ConfigureDoctorAsh();
         }
+
+
     }
 }
