@@ -11,7 +11,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace DoctorAsh.Appointments
 {
-    public class AppointmentAppServiceTests : DoctorAshApplicationTestBase
+    public sealed class AppointmentAppServiceTests : DoctorAshApplicationTestBase
     {
         private readonly IAppointmentAppService _appointmentAppService;
 
@@ -29,8 +29,10 @@ namespace DoctorAsh.Appointments
                 Title = "Test Appointment",
                 Description = "Testing appointment",
                 StartDate = date,
-                EndDate = date.AddDays(10),
+                EndDate = DateTime.Now,
                 Recurrence = RecurrenceType.Annually,
+                DoctorId = TestData.DoctorId,
+                PatientId = TestData.PatientId
             };
             
             //When
@@ -52,8 +54,10 @@ namespace DoctorAsh.Appointments
                 Title = "Test Appointment",
                 Description = "Testing appointment",
                 StartDate = date,
-                EndDate = date,
+                EndDate = DateTime.Now,
                 Recurrence = RecurrenceType.Annually,
+                DoctorId = TestData.DoctorId,
+                PatientId = TestData.PatientId
             };
             //When
             var exception = await Assert.ThrowsAsync<InvalidEndDateException>(async () =>
@@ -70,16 +74,15 @@ namespace DoctorAsh.Appointments
         public async Task CreateAsync_GivenDrAvailableTime_ReturnNewAppointment()
         {
             //Given
-            var date = DateTime.Now.AddDays(1).AddHours(4);
             var input = new CreateAppointmentDto
             {
                 DoctorId= TestData.DoctorId,
                 PatientId = TestData.PatientId,
                 Title = "Test Appointment",
                 Description = "Testing appointment",
-                StartDate = date,
-                EndDate = date.AddHours(1),
-                Recurrence = RecurrenceType.Annually,
+                StartDate = DateTime.Now.AddDays(1),
+                EndDate = DateTime.Now.AddDays(1).AddHours(4),
+                Recurrence = RecurrenceType.Annually
             };
 
             //When

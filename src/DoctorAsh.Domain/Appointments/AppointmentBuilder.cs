@@ -24,7 +24,12 @@ namespace DoctorAsh.Appointments
             appointment.Title = _title;
             appointment.Description = _description;
             appointment.SetStartDate(_startDate);
-            appointment.SetEndDate((DateTime)_endDate);
+
+            if (_endDate != null)
+            {
+                appointment.SetEndDate((DateTime)_endDate);
+            }
+
             appointment.Recurrence = _recurrence;
             appointment.Status = _status;
             return appointment;

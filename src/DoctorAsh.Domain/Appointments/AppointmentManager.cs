@@ -28,13 +28,13 @@ namespace DoctorAsh.Appointments
             _clock = clock;
         }
         public async Task<Appointment> CreateAsync(
-            [NotNull] Guid doctorId,
-            [NotNull] Guid patientId,
-            [NotNull] string title,
-            [NotNull] string description,
-            [NotNull] DateTime startDate,
+             Guid doctorId,
+             Guid patientId,
+             string title,
+             string description,
+             DateTime startDate,
             DateTime endDate,
-            [NotNull] RecurrenceType recurrence)
+             RecurrenceType recurrence)
         {
             var ab = new AppointmentBuilder(GuidGenerator.Create());
 
@@ -46,6 +46,7 @@ namespace DoctorAsh.Appointments
                 .WithRecurrence(recurrence)
                 .WithStartDate(startDate)
                 .WithEndDate(endDate)
+                .WithStatus(StatusType.AwaitingApproval)
                 .Build();
 
             return await _appointmentRepo.InsertAsync(appointment, autoSave: true);
@@ -63,9 +64,9 @@ namespace DoctorAsh.Appointments
         }
 
         public async Task<Appointment> RescheduleAsync(
-            [NotNull] Appointment appointment,
-            [NotNull] DateTime startDate,
-            [NotNull] DateTime endDate)
+             Appointment appointment,
+             DateTime startDate,
+             DateTime endDate)
         {
             appointment.SetStartDate(startDate);
             appointment.SetEndDate(endDate);
@@ -74,8 +75,8 @@ namespace DoctorAsh.Appointments
         }
 
         public async Task<Appointment> CancelAsync(
-            [NotNull] Appointment appointment,
-            [NotNull] string reason
+            Appointment appointment,
+            string reason
         )
         {
             appointment.Cancel(reason, _clock.Now);
@@ -89,8 +90,7 @@ namespace DoctorAsh.Appointments
         {
             appointment.ReActivate();
 
-            var activatedAppointment = await _appointmentRepo.UpdateAsync(appointment, true);
-            return appointment;
+           return await _appointmentRepo.UpdateAsync(appointment, true);
         }
 
         public Task AcceptAsync(Appointment appointment)

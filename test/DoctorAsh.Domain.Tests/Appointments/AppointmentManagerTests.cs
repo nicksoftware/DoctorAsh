@@ -18,14 +18,14 @@ namespace DoctorAsh.Appointments
             _clock = GetService<IClock>();
         }
 
-        [Fact(Skip = "Test is buggy")]
+        // [Fact(Skip = "Test is buggy")]
         public async Task CreateAsync()
         {
             //Given
             var patientId = TestData.PatientId;
             Guid doctorId = TestData.DoctorId;
-            const string title = "Test builder";
-            const string description = "Test builder Appointment";
+            const string title = "abc";
+            const string description = "Test  Appointment";
             var start = DateTime.Now.AddDays(2);
             var end = DateTime.Now.AddDays(4);
             var fakeEventBus = Substitute.For<ILocalEventBus>();

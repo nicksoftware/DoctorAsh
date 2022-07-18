@@ -47,15 +47,15 @@ namespace DoctorAsh.Doctors
         public void IsSatisfiedBy_WhenStartTimeIsEqualTodoctorEndTime_ReturnFalse()
         {
             var date = DateTime.Now;
-
+            var endDate = DateTime.Now.AddHours(15);
             var dr = Doctor.Create(TestData.DoctorId, TestData.AdminId);
             dr.AddWorkingHour(new WorkingHour(dr.Id, DayOfWeek.Monday)
             {
                 StartTime = date,
-                EndTime = date.AddHours(15),
+                EndTime = endDate
             });
             //When
-            var spec = new DoctorIsAtWorkSpecification(date.AddHours(15), date.AddHours(2));
+            var spec = new DoctorIsAtWorkSpecification(DateTime.Now.AddHours(15), DateTime.Now.AddHours(17));
             var result = spec.IsSatisfiedBy(dr);
             result.ShouldBe(false);
         }

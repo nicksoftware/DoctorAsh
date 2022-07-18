@@ -17,7 +17,7 @@ namespace DoctorAsh.Appointments
         public RecurrenceType Recurrence { get; set; }
         public StatusType Status { get; internal set; }
         public bool IsCancelled { get; set; }
-        public string cancellationReason { get; set; }
+        public string CancellationReason { get; set; }
 
         protected Appointment() { }
 
@@ -51,7 +51,7 @@ namespace DoctorAsh.Appointments
 
             IsCancelled = true;
             Status = StatusType.Cancelled;
-            cancellationReason = reason;
+            CancellationReason = reason;
 
             AddLocalEvent(new AppointmentCancelled(Id, reason, cancellationDate));
         }
@@ -70,7 +70,7 @@ namespace DoctorAsh.Appointments
 
             IsCancelled = false;
             Status = StatusType.Cancelled;
-            cancellationReason = string.Empty;
+            CancellationReason = string.Empty;
 
             AddLocalEvent(new AppointmemtReactivated(Id));
         }
